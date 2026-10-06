@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { Select } from '@/components/ui/form/Select';
+import { TextField } from '@/components/ui/form/TextField';
 import { track } from '@/lib/analytics';
 import type { Dictionary } from '@/lib/content/pt';
 import { messages, waLink } from '@/lib/whatsapp';
@@ -48,50 +50,31 @@ export function CorporateForm({ idPrefix, copy, templates }: Props) {
     window.open(waLink(text), '_blank', 'noopener,noreferrer');
   }
 
-  const field = (name: Field, input: React.ReactNode) => (
-    <div>
-      <label htmlFor={id(name)} className="field-label">
-        {copy.labels[name]}
-      </label>
-      {input}
-      <span id={id(`${name}-error`)} className="field-error" aria-live="polite">
-        {errors[name]}
-      </span>
-    </div>
-  );
+  const clear = (field: Field) => () => setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
 
-  const common = (name: Field) => ({
-    id: id(name),
-    name,
-    required: true,
-    className: 'field-input',
-    'aria-invalid': errors[name] ? true : undefined,
-    'aria-describedby': id(`${name}-error`),
-  });
+  const text = (name: Field, props: React.InputHTMLAttributes<HTMLInputElement>) => (
+    <TextField id={id(name)} name={name} label={copy.labels[name]} required error={errors[name]} onChange={clear(name)} {...props} />
+  );
 
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} data-hide-cta="" className="grid gap-5">
-      {field('company', <input {...common('company')} type="text" autoComplete="organization" />)}
-      {field('name', <input {...common('name')} type="text" autoComplete="name" />)}
-      {field('email', <input {...common('email')} type="email" autoComplete="email" inputMode="email" />)}
-      {field(
-        'volume',
-        <select {...common('volume')} defaultValue="">
-          <option value="" disabled>
-            {copy.volumePlaceholder}
-          </option>
-          {copy.volumes.map((v) => (
-            <option key={v.value} value={v.value}>
-              {v.label}
-            </option>
-          ))}
-        </select>,
-      )}
+      {text('company', { type: 'text', autoComplete: 'organization' })}
+      {text('name', { type: 'text', autoComplete: 'name' })}
+      {text('email', { type: 'email', autoComplete: 'email', inputMode: 'email' })}
+      <Select
+        id={id('volume')}
+        name="volume"
+        label={copy.labels.volume}
+        placeholder={copy.volumePlaceholder}
+        options={copy.volumes}
+        error={errors.volume}
+        onChange={clear('volume')}
+      />
       <button type="submit" className="btn btn-gold btn-lg mt-2">
         {copy.submit} <span className="arrow" aria-hidden="true">→</span>
       </button>
       <p role="status" className="font-mono text-[13px] text-[#f0a48f]">
-        {Object.keys(errors).length ? copy.errorSummary : ''}
+        {Object.values(errors).some(Boolean) ? copy.errorSummary : ''}
       </p>
       <p className="-mt-3 text-[14px] text-muted">{copy.note}</p>
     </form>

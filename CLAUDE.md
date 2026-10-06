@@ -31,6 +31,7 @@
 - JSON-LD: `lib/schema.ts` (um `@graph` por página).
 - Eventos de analytics: `track()` em `lib/analytics.ts`.
 - Seções: `components/LandingPage.tsx` monta a página; cada seção em `components/sections/`.
+- **Campos de formulário:** sempre os componentes de `components/ui/form/` — `TextField`, `Select`, `DatePicker` e `Checkbox` — nunca `<select>`, `<input type="date|time|checkbox">` nativos. Variantes: `line` (dentro da frase de cotação, com `hideLabel`) e `box` (formulários comuns). `Select` e `DatePicker` seguem os padrões WAI-ARIA (combobox/listbox e date picker) e mandam o valor por `<input type="hidden">`, então `FormData` funciona normalmente. O horário é um `Select` de 30 em 30 minutos. Estilos em `app/globals.css` (bloco "Field kit", classes `fx-*`).
 - Política de privacidade: bloco `<details id="privacidade">` no rodapé.
 - Pendências do cliente: `PENDENCIAS.md`.
 - Logo: ainda não existe arquivo. Enquanto `site.logo` for `undefined`, o cabeçalho usa um wordmark tipográfico.

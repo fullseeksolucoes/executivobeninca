@@ -72,7 +72,9 @@ export const pt = {
       starlink: 'Quero o carro com internet Starlink',
       english: 'Quero motorista que fale inglês',
     },
-    placeholders: { destination: 'destino', flight: 'Ex.: G3 1234' },
+    placeholders: { destination: 'destino', flight: 'Ex.: G3 1234', date: 'escolha a data', time: 'horário' },
+    intlLocale: 'pt-BR',
+    calendar: { dialog: 'Escolher a data da viagem', prevMonth: 'Mês anterior', nextMonth: 'Próximo mês' },
     originPlaceholder: 'escolha a origem',
     origins: [
       'Joinville (endereço)',
@@ -99,6 +101,7 @@ export const pt = {
     },
     errorSummary: 'Confira os campos marcados antes de enviar.',
     timeFallback: 'horário a combinar',
+    timeAny: 'a combinar',
     flightFallback: 'não informado',
     yes: 'sim',
     no: 'não',
@@ -330,7 +333,7 @@ export const pt = {
     service: 'Olá! Quero uma cotação de {topic}. ',
     fleet: 'Olá! Quero reservar o {model} para uma viagem. ',
     corporate:
-      'Olá! Sou da empresa {company} ({name}, {email}). Temos cerca de {volume} viagens por mês e queremos uma proposta com nota fiscal.',
+      'Olá! Sou da empresa {company} ({name}, {email}). Temos {volume} viagens por mês e queremos uma proposta com nota fiscal.',
   },
 };
 

@@ -1,6 +1,10 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { Checkbox } from '@/components/ui/form/Checkbox';
+import { DatePicker } from '@/components/ui/form/DatePicker';
+import { Select } from '@/components/ui/form/Select';
+import { TextField } from '@/components/ui/form/TextField';
 import { track, type WhatsappLocation } from '@/lib/analytics';
 import type { Dictionary } from '@/lib/content/pt';
 import { messages, waLink } from '@/lib/whatsapp';
@@ -15,6 +19,9 @@ interface Props {
   templates: Dictionary['whatsapp'];
   location: WhatsappLocation;
 }
+
+/** Every 30 minutes, 00:00 to 23:30. */
+const TIMES = Array.from({ length: 48 }, (_, i) => `${String(Math.floor(i / 2)).padStart(2, '0')}:${i % 2 ? '30' : '00'}`);
 
 function toDayMonth(iso: string) {
   const [, m, d] = iso.split('-');
@@ -31,6 +38,7 @@ export function QuoteSentence({ idPrefix, copy, templates, location }: Props) {
   const [errors, setErrors] = useState<Errors>({});
   const formRef = useRef<HTMLFormElement>(null);
   const id = (name: string) => `${idPrefix}-${name}`;
+  const clear = (field: Field) => () => setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
 
   function validate(data: FormData): Errors {
     const next: Errors = {};
@@ -73,127 +81,105 @@ export function QuoteSentence({ idPrefix, copy, templates, location }: Props) {
     window.open(waLink(text), '_blank', 'noopener,noreferrer');
   }
 
-  const fieldProps = (name: Field) => ({
-    id: id(name),
-    name,
-    'aria-invalid': errors[name] ? true : undefined,
-    'aria-describedby': id(`${name}-error`),
-  });
-
-  const error = (name: Field) => (
-    <span id={id(`${name}-error`)} className="quote-error" aria-live="polite">
-      {errors[name]}
-    </span>
-  );
-
-  const toggle = (name: 'starlink' | 'english') => (
-    <label className="toggle" htmlFor={id(name)}>
-      <input id={id(name)} name={name} type="checkbox" value="1" />
-      <span className="toggle-track" aria-hidden="true" />
-      {copy.labels[name]}
-    </label>
-  );
-
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} data-hide-cta="" aria-describedby={id('note')}>
       <div className="quote-sentence">
-        <span className="quote-seg">
+        <div className="quote-seg">
           <span className="quote-seg-text">{copy.textStart}</span>
-          <span className="quote-field qf-origin">
-            <label htmlFor={id('origin')} className="sr-only">
-              {copy.labels.origin}
-            </label>
-            <select {...fieldProps('origin')} defaultValue="" className="quote-input" autoComplete="off">
-              <option value="" disabled>
-                {copy.originPlaceholder}
-              </option>
-              {copy.origins.map((o) => (
-                <option key={o} value={o}>
-                  {o}
-                </option>
-              ))}
-            </select>
-            {error('origin')}
-          </span>
-        </span>
+          <Select
+            id={id('origin')}
+            name="origin"
+            label={copy.labels.origin}
+            hideLabel
+            variant="line"
+            className="qf-origin"
+            placeholder={copy.originPlaceholder}
+            options={copy.origins.map((o) => ({ value: o, label: o }))}
+            error={errors.origin}
+            onChange={clear('origin')}
+          />
+        </div>
 
-        <span className="quote-seg">
+        <div className="quote-seg">
           <span className="quote-seg-text">{copy.textTo}</span>
-          <span className="quote-field qf-destination">
-            <label htmlFor={id('destination')} className="sr-only">
-              {copy.labels.destination}
-            </label>
-            <input
-              {...fieldProps('destination')}
-              type="text"
-              placeholder={copy.placeholders.destination}
-              autoComplete="off"
-              enterKeyHint="next"
-              className="quote-input"
-            />
-            {error('destination')}
-          </span>
-        </span>
+          <TextField
+            id={id('destination')}
+            name="destination"
+            label={copy.labels.destination}
+            hideLabel
+            variant="line"
+            className="qf-destination"
+            placeholder={copy.placeholders.destination}
+            autoComplete="off"
+            enterKeyHint="next"
+            error={errors.destination}
+            onChange={clear('destination')}
+          />
+        </div>
 
-        <span className="quote-seg">
+        <div className="quote-seg">
           <span className="quote-seg-text">{copy.textDate}</span>
-          <span className="quote-field qf-date">
-            <label htmlFor={id('date')} className="sr-only">
-              {copy.labels.date}
-            </label>
-            <input {...fieldProps('date')} type="date" inputMode="numeric" autoComplete="off" className="quote-input" />
-            {error('date')}
-          </span>
-        </span>
+          <DatePicker
+            id={id('date')}
+            name="date"
+            label={copy.labels.date}
+            hideLabel
+            variant="line"
+            className="qf-date"
+            placeholder={copy.placeholders.date}
+            locale={copy.intlLocale}
+            labels={copy.calendar}
+            error={errors.date}
+            onChange={clear('date')}
+          />
+        </div>
 
-        <span className="quote-seg">
+        <div className="quote-seg">
           <span className="quote-seg-text">{copy.textTime}</span>
-          <span className="quote-field qf-time">
-            <label htmlFor={id('time')} className="sr-only">
-              {copy.labels.time}
-            </label>
-            <input id={id('time')} name="time" type="time" inputMode="numeric" autoComplete="off" className="quote-input" />
-          </span>
-        </span>
+          <Select
+            id={id('time')}
+            name="time"
+            label={copy.labels.time}
+            hideLabel
+            variant="line"
+            className="qf-time"
+            placeholder={copy.placeholders.time}
+            initialActiveValue="08:00"
+            options={[{ value: '', label: copy.timeAny }, ...TIMES.map((t) => ({ value: t, label: t }))]}
+          />
+        </div>
 
-        <span className="quote-seg">
+        <div className="quote-seg">
           <span className="quote-seg-text">{copy.textPax}</span>
-          <span className="quote-field qf-pax">
-            <label htmlFor={id('pax')} className="sr-only">
-              {copy.labels.pax}
-            </label>
-            <select id={id('pax')} name="pax" defaultValue={copy.paxOptions[0]} className="quote-input">
-              {copy.paxOptions.map((o) => (
-                <option key={o} value={o}>
-                  {o}
-                </option>
-              ))}
-            </select>
-          </span>
+          <Select
+            id={id('pax')}
+            name="pax"
+            label={copy.labels.pax}
+            hideLabel
+            variant="line"
+            className="qf-pax"
+            defaultValue={copy.paxOptions[0]}
+            options={copy.paxOptions.map((o) => ({ value: o, label: o }))}
+          />
           <span aria-hidden="true" className="hidden min-[900px]:inline">
             {copy.textEnd}
           </span>
-        </span>
+        </div>
       </div>
 
       <div className="mt-10 grid gap-6 border-t border-line pt-8 lg:grid-cols-[minmax(0,1fr)_auto_auto] lg:items-end lg:gap-8">
-        <div className="max-w-xs">
-          <label htmlFor={id('flight')} className="field-label">
-            {copy.labels.flight}
-          </label>
-          <input
-            id={id('flight')}
-            name="flight"
-            type="text"
-            placeholder={copy.placeholders.flight}
-            autoComplete="off"
-            autoCapitalize="characters"
-            className="field-input"
-          />
-        </div>
+        <TextField
+          id={id('flight')}
+          name="flight"
+          label={copy.labels.flight}
+          className="max-w-xs"
+          placeholder={copy.placeholders.flight}
+          autoComplete="off"
+          autoCapitalize="characters"
+        />
         <div className="grid gap-1">
-          {toggle('starlink')}
-          {toggle('english')}
+          <Checkbox id={id('starlink')} name="starlink" label={copy.labels.starlink} />
+          <Checkbox id={id('english')} name="english" label={copy.labels.english} />
         </div>
         <button type="submit" className="btn btn-gold btn-lg w-full lg:w-auto">
           {copy.submit} <span className="arrow" aria-hidden="true">→</span>
@@ -201,7 +187,7 @@ export function QuoteSentence({ idPrefix, copy, templates, location }: Props) {
       </div>
 
       <p role="status" className="mt-4 font-mono text-[13px] text-[#f0a48f]">
-        {Object.keys(errors).length ? copy.errorSummary : ''}
+        {Object.values(errors).some(Boolean) ? copy.errorSummary : ''}
       </p>
       <p id={id('note')} className="mt-2 text-[15px] text-muted">
         {copy.note}

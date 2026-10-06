@@ -71,7 +71,9 @@ export const en: Dictionary = {
       starlink: 'I want the car with Starlink internet',
       english: 'I want an English-speaking driver',
     },
-    placeholders: { destination: 'destination', flight: 'e.g. G3 1234' },
+    placeholders: { destination: 'destination', flight: 'e.g. G3 1234', date: 'pick a date', time: 'time' },
+    intlLocale: 'en-US',
+    calendar: { dialog: 'Choose the travel date', prevMonth: 'Previous month', nextMonth: 'Next month' },
     originPlaceholder: 'choose pick-up',
     origins: [
       'Joinville (address)',
@@ -98,6 +100,7 @@ export const en: Dictionary = {
     },
     errorSummary: 'Please check the highlighted fields.',
     timeFallback: 'time to be agreed',
+    timeAny: 'flexible',
     flightFallback: 'not provided',
     yes: 'yes',
     no: 'no',
@@ -329,6 +332,6 @@ export const en: Dictionary = {
     service: 'Hello! I would like a quote for {topic}. ',
     fleet: 'Hello! I would like to book the {model} for a trip. ',
     corporate:
-      'Hello! I am from {company} ({name}, {email}). We have about {volume} trips per month and would like a proposal with invoices.',
+      'Hello! I am from {company} ({name}, {email}). We have {volume} trips per month and would like a proposal with invoices.',
   },
 };

@@ -363,27 +363,6 @@
 .quote-input[aria-invalid="true"] {
   border-bottom-color: #e8896f;
 }
-select.quote-input {
-  padding-right: 26px;
-  background-image: linear-gradient(45deg, transparent 50%, var(--color-gold) 50%),
-    linear-gradient(135deg, var(--color-gold) 50%, transparent 50%);
-  background-position:
-    calc(100% - 12px) 55%,
-    calc(100% - 6px) 55%;
-  background-size:
-    6px 6px,
-    6px 6px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-select.quote-input option {
-  background: var(--color-ink-2);
-  color: var(--color-paper);
-}
-.quote-input::-webkit-calendar-picker-indicator {
-  filter: invert(0.75) sepia(1) saturate(3) hue-rotate(5deg);
-  cursor: pointer;
-}
 .quote-error {
   display: block;
   margin-top: 6px;
@@ -436,10 +415,10 @@ select.quote-input option {
     width: 14em;
   }
   .qf-date {
-    width: 8.4em;
+    width: 9.6em;
   }
   .qf-time {
-    width: 5.2em;
+    width: 6em;
   }
   .qf-pax {
     width: 6.6em;
@@ -480,17 +459,6 @@ select.quote-input option {
 .field-input[aria-invalid="true"] {
   border-color: #e8896f;
 }
-select.field-input {
-  background-image: linear-gradient(45deg, transparent 50%, var(--color-gold) 50%),
-    linear-gradient(135deg, var(--color-gold) 50%, transparent 50%);
-  background-position:
-    calc(100% - 20px) 50%,
-    calc(100% - 14px) 50%;
-  background-size:
-    6px 6px,
-    6px 6px;
-  background-repeat: no-repeat;
-}
 .field-error {
   display: block;
   margin-top: 6px;
@@ -499,9 +467,232 @@ select.field-input {
   color: #f0a48f;
 }
 
-/* Toggle */
-.toggle {
+/* -------------------------------------------------------------------------- */
+/* Field kit (components/ui/form): select, date picker, checkbox               */
+/* -------------------------------------------------------------------------- */
+
+.fx {
   position: relative;
+}
+
+/* Trigger shared by Select and DatePicker; sits on .quote-input / .field-input */
+.fx-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+}
+.fx-trigger:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+.fx-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fx-placeholder {
+  color: var(--color-muted);
+}
+.fx-chevron {
+  flex: none;
+  width: 0.55em;
+  min-width: 10px;
+  height: auto;
+  color: var(--color-gold);
+  transition: transform 0.2s;
+}
+.fx-trigger[aria-expanded="true"] .fx-chevron {
+  transform: rotate(180deg);
+}
+.fx-chevron.fx-cal-icon {
+  width: 0.7em;
+  min-width: 18px;
+}
+.fx-trigger[aria-expanded="true"] .fx-cal-icon {
+  transform: none;
+}
+
+/* Popover (list and calendar) */
+.fx-pop {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 45;
+  min-width: 100%;
+  max-width: calc(100vw - 32px);
+  background: var(--color-ink-2);
+  border: 1px solid var(--color-line);
+  border-top: 2px solid var(--color-gold);
+  border-radius: var(--radius-xs);
+  box-shadow: 0 16px 32px -12px rgb(0 0 0 / 0.7);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--color-paper);
+}
+.fx-pop[hidden] {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fx-pop:not([hidden]) {
+    animation: fx-pop-in 0.16s ease-out;
+  }
+}
+@keyframes fx-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.fx-list {
+  width: max-content;
+  min-width: max(100%, 14rem);
+  max-height: 18rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 0;
+}
+.fx-list-head {
+  padding: 10px 16px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  border-bottom: 1px solid var(--color-line-soft);
+}
+.fx-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: 10px 16px;
+  color: var(--color-text-2);
+  cursor: pointer;
+}
+.fx-option[data-active] {
+  background: var(--color-ink-3);
+  color: var(--color-paper);
+  box-shadow: inset 2px 0 0 var(--color-gold);
+}
+.fx-option[aria-selected="true"] {
+  color: var(--color-gold);
+}
+.fx-option-check {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--color-gold);
+  visibility: hidden;
+}
+.fx-option[aria-selected="true"] .fx-option-check {
+  visibility: visible;
+}
+
+/* Calendar */
+.fx-cal {
+  width: 21rem;
+  padding: 12px;
+}
+.fx-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.fx-cal-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+.fx-cal-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-xs);
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+}
+.fx-cal-nav:hover:not(:disabled) {
+  border-color: var(--color-gold);
+}
+.fx-cal-nav:disabled {
+  color: var(--color-dim);
+  cursor: not-allowed;
+}
+.fx-cal-grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.fx-cal-grid th {
+  padding: 6px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+.fx-cal-grid td {
+  padding: 1px;
+  text-align: center;
+}
+.fx-day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 44px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-paper);
+}
+.fx-day:hover:not([aria-disabled="true"]) {
+  background: var(--color-ink-3);
+  border-color: var(--color-line);
+}
+.fx-day[data-today] {
+  border-color: var(--color-gold);
+}
+.fx-day[aria-pressed="true"] {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.fx-day[aria-disabled="true"] {
+  color: var(--color-dim);
+  cursor: not-allowed;
+  text-decoration: line-through;
+  text-decoration-color: var(--color-line);
+}
+.fx-day:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 1px;
+}
+
+/* Checkbox */
+.fx-check {
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -510,48 +701,58 @@ select.field-input {
   font-size: 16px;
   color: var(--color-text-2);
 }
-.toggle input {
-  position: absolute;
-  opacity: 0;
-  width: 44px;
-  height: 26px;
-  margin: 0;
-  cursor: pointer;
+.fx-check:hover {
+  color: var(--color-paper);
 }
-.toggle-track {
-  position: relative;
+.fx-check-box {
+  display: inline-flex;
   flex: none;
-  width: 44px;
-  height: 24px;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
   border: 1px solid var(--color-line);
+  border-radius: var(--radius-xs);
   background: var(--color-ink-3);
-  border-radius: 2px;
-  transition: background-color 0.2s;
-}
-.toggle-track::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 16px;
-  height: 16px;
-  background: var(--color-muted);
-  border-radius: 1px;
+  color: var(--color-ink);
   transition:
-    transform 0.2s,
-    background-color 0.2s;
+    background-color 0.15s,
+    border-color 0.15s;
 }
-.toggle input:checked + .toggle-track {
-  background: rgb(214 178 94 / 0.18);
+.fx-check:hover .fx-check-box {
   border-color: var(--color-gold);
 }
-.toggle input:checked + .toggle-track::after {
-  transform: translateX(20px);
-  background: var(--color-gold);
+.fx-check-box svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
 }
-.toggle input:focus-visible + .toggle-track {
+.fx-check input:checked + .fx-check-box {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+}
+.fx-check input:checked + .fx-check-box svg {
+  opacity: 1;
+  transform: none;
+}
+.fx-check input:focus-visible + .fx-check-box {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
+}
+
+@media (max-width: 899px) {
+  /* In the stacked sentence the popovers take the full field width. */
+  .quote-field .fx-pop {
+    right: 0;
+  }
+  .quote-field .fx-list {
+    width: auto;
+    min-width: 0;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
