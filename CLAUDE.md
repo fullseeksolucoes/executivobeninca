@@ -12,7 +12,7 @@ Site institucional da **Beninca Transporte Executivo** (Joinville, SC). Transfer
 
 - Next.js (App Router), TypeScript strict, Tailwind CSS 4 (tokens em `@theme`, em `app/globals.css`).
 - Antes de usar uma API do Next.js, consulte `node_modules/next/dist/docs/`. Esta versão tem mudanças (por exemplo, `params` é uma Promise).
-- Fontes via `next/font/google`: Big Shoulders Display (títulos), Instrument Sans (corpo) e IBM Plex Mono (rótulos e dados).
+- Fontes: Big Shoulders Display (títulos) via `next/font/local` (`assets/fonts/`, corte opsz 72, pesos 800/900; o Google agora chama a família de "Big Shoulders"), Instrument Sans (corpo) e IBM Plex Mono (rótulos e dados, sem preload) via `next/font/google`. O fallback com largura ajustada fica em `app/globals.css`.
 - Animações só em CSS. **Não adicionar** framer-motion, three.js nem bibliotecas de ícones.
 - Server Components por padrão; `'use client'` só quando houver estado ou eventos.
 
@@ -24,6 +24,8 @@ Site institucional da **Beninca Transporte Executivo** (Joinville, SC). Transfer
 - JSON-LD: `lib/schema.ts` (um `@graph` com `@context` por página).
 - Eventos de analytics: `track()` em `lib/analytics.ts`.
 - Pendências do cliente: `PENDENCIAS.md`.
+- Logo: ainda não existe arquivo. Enquanto `site.logo` for `undefined`, o cabeçalho usa um wordmark tipográfico (`components/ui/Logo.tsx`).
+- Animações: `CarLineArt` e `FlapTiles` são CSS puro; `InView` só alterna classes (pausa fora da tela). Sem JS, ou com reduced motion, aparece o estado final.
 
 ## Dados confirmados do cliente
 
