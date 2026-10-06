@@ -18,7 +18,7 @@
 - Imagens OG com URL fixa: `app/og-pt.png/route.tsx` e `app/og-en.png/route.tsx` (dentro de route groups, `opengraph-image` ganha sufixo na URL).
 - Fontes (`app/fonts.ts`): Big Shoulders Display via `next/font/local` (`assets/fonts/`, opsz 72, pesos 800/900), Instrument Sans e IBM Plex Mono (sem preload) via `next/font/google`. O fallback com largura ajustada fica em `app/globals.css`.
 - Animações em CSS. **Não adicionar** framer-motion, three.js nem bibliotecas de ícones. O site não tem animação de carro. Exceção: **Lenis** (rolagem suave, igual ao projeto fullseek).
-- Rolagem e navegação na página (igual ao fullseek): `components/layout/LenisProvider.tsx` liga o Lenis (`duration: 1.2`, `smoothWheel`, `touchMultiplier: 2`; respeita reduced motion). `components/layout/SmoothAnchors.tsx` intercepta links `#secao` e o link da logo e chama `scrollToSection()`/`scrollToTop()` de `lib/scroll.ts`, **sem colocar `#secao` na URL**. O menu do celular fecha e a rolagem começa 150ms depois; o Lenis fica parado com o menu aberto. A folga do cabeçalho vem do `scroll-margin-top` das seções. Elementos com rolagem própria levam `data-lenis-prevent`. Links novos só precisam de `href="#id"`.
+- Rolagem e navegação na página (igual ao fullseek): `components/layout/LenisProvider.tsx` liga o Lenis (`lerp: 0.15` na roda do mouse, `smoothWheel`, `touchMultiplier: 2`, `respectReducedMotion: false` a pedido do cliente, como no fullseek). Cliques em links usam `duration: 1.2`. `components/layout/SmoothAnchors.tsx` intercepta links `#secao` e o link da logo e chama `scrollToSection()`/`scrollToTop()` de `lib/scroll.ts`, **sem colocar `#secao` na URL**. O menu do celular fecha e a rolagem começa 150ms depois; o Lenis fica parado com o menu aberto. A folga do cabeçalho vem do `scroll-margin-top` das seções. Elementos com rolagem própria levam `data-lenis-prevent`. Links novos só precisam de `href="#id"`.
 - Server Components por padrão; `'use client'` só quando houver estado ou eventos.
 
 ## Onde fica cada coisa
@@ -65,5 +65,5 @@
 
 - Um H1 por página. Metadata completa (canonical, `hreflang` pt-BR/en/x-default, Open Graph com `siteName`, `locale`, `type`, `url` e imagem).
 - Sitemap com as duas URLs e alternâncias de idioma. Nunca bloquear `/_next/` no robots. Sem `new Date()` no sitemap.
-- Acessibilidade WCAG AA: labels reais, foco visível, `aria-label` em botões só com ícone, `prefers-reduced-motion` respeitado.
+- Acessibilidade WCAG AA: labels reais, foco visível, `aria-label` em botões só com ícone, `prefers-reduced-motion` respeitado nas animações CSS (exceção pedida pelo cliente: a rolagem do Lenis).
 - Metas: Lighthouse mobile Performance ≥ 95, SEO 100, Acessibilidade ≥ 95. Sem rolagem horizontal em 360px.

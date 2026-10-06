@@ -7,16 +7,15 @@ import type Lenis from 'lenis';
  */
 let lenisInstance: Lenis | null = null;
 
+/** Link clicks: 1.2s with Lenis' default exponential ease-out, as in fullseek. */
+const LINK_SCROLL = { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) };
+
 export function setLenis(lenis: Lenis | null) {
   lenisInstance = lenis;
 }
 
 export function getLenis() {
   return lenisInstance;
-}
-
-function reducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 /** Moves keyboard and screen-reader focus to the section after the scroll. */
@@ -32,18 +31,18 @@ export function scrollToSection(id: string) {
   if (!el) return;
   const lenis = getLenis();
   if (lenis) {
-    lenis.scrollTo(el, { onComplete: () => focusSection(el) });
+    lenis.scrollTo(el, { ...LINK_SCROLL, onComplete: () => focusSection(el) });
     return;
   }
   // Fallback before Lenis starts.
   const margin = Number.parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
   const top = el.getBoundingClientRect().top + window.scrollY - margin;
-  window.scrollTo({ top, behavior: reducedMotion() ? 'instant' : 'smooth' });
+  window.scrollTo({ top, behavior: 'smooth' });
   focusSection(el);
 }
 
 export function scrollToTop() {
   const lenis = getLenis();
-  if (lenis) lenis.scrollTo(0);
-  else window.scrollTo({ top: 0, behavior: reducedMotion() ? 'instant' : 'smooth' });
+  if (lenis) lenis.scrollTo(0, LINK_SCROLL);
+  else window.scrollTo({ top: 0, behavior: 'smooth' });
 }
