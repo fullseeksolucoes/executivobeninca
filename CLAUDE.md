@@ -34,7 +34,7 @@
 - **Campos de formulário:** sempre os componentes de `components/ui/form/` — `TextField`, `Select`, `DatePicker` e `Checkbox` — nunca `<select>`, `<input type="date|time|checkbox">` nativos. Variantes: `line` (dentro da frase de cotação, com `hideLabel`) e `box` (formulários comuns). `Select` e `DatePicker` seguem os padrões WAI-ARIA (combobox/listbox e date picker) e mandam o valor por `<input type="hidden">`, então `FormData` funciona normalmente. O horário é um `Select` de 30 em 30 minutos. Estilos em `app/globals.css` (bloco "Field kit", classes `fx-*`).
 - Política de privacidade: bloco `<details id="privacidade">` no rodapé.
 - Pendências do cliente: `PENDENCIAS.md`.
-- Logo: ainda não existe arquivo. Enquanto `site.logo` for `undefined`, o cabeçalho usa um wordmark tipográfico.
+- Logo do cliente (`public/brand/`, configurada em `site.logo`): `beninca-logo.webp/.jpg` é a original (640×640, fundo preto), usada no rodapé, no schema e na imagem OG; `beninca-wordmark.png` é o recorte "BENINCA / TRANSPORTE EXECUTIVO" com fundo transparente, usado no cabeçalho. Ícones: `app/icon.png` e `app/apple-icon.png` (recorte do "B") e `public/brand/icon-192.png`/`icon-512.png` (logo inteira, para o manifest). Não redesenhar a logo.
 
 ## Dados confirmados do cliente
 

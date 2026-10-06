@@ -97,4 +97,15 @@ Cada idioma tem um único `<script type="application/ld+json">` com `@graph`: `L
 
 - Big Shoulders Display (títulos): servida localmente de `assets/fonts/` (corte opsz 72, pesos 800 e 900, subconjunto latin), com fallback de largura ajustada em `app/globals.css`.
 - Instrument Sans e IBM Plex Mono: `next/font/google`.
-- Os `.ttf` em `assets/fonts/` são usados só nas imagens OG (`/og-pt.png`, `/og-en.png`) e nos ícones gerados por código.
+- Os `.ttf` em `assets/fonts/` são usados só nas imagens OG (`/og-pt.png`, `/og-en.png`).
+
+## Logo e ícones
+
+Arquivos em `public/brand/`, derivados da logo enviada pelo cliente (JPG/WebP 640×640, fundo preto):
+
+- `beninca-logo.webp` / `.jpg`: original (rodapé, schema, imagem OG).
+- `beninca-wordmark.png`: recorte do nome com fundo transparente (cabeçalho).
+- `icon-192.png` / `icon-512.png`: manifest.
+- `app/icon.png` e `app/apple-icon.png`: recorte do "B" (favicon e iPhone).
+
+Quando chegar a versão em vetor, refaça esses recortes a partir dela.

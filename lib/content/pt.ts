@@ -9,11 +9,11 @@ export const pt = {
       'Transfer executivo em Joinville e região para os aeroportos de Curitiba, Navegantes e Florianópolis. Motorista bilíngue, nota fiscal, 24h com agendamento.',
     ogAlt: 'Beninca Transporte Executivo: transfer de Joinville para os aeroportos JOI, NVT, CWB e FLN.',
     ogKicker: 'Transporte executivo · Joinville – SC',
+    ogHeadline: 'Transfer para os aeroportos da região',
   },
 
   ui: {
     skipLink: 'Pular para o conteúdo',
-    tagline: 'Transporte Executivo',
     homeLinkLabel: 'Beninca Transporte Executivo, início',
     headerCta: 'Cotar viagem',
     menuOpen: 'Abrir menu',

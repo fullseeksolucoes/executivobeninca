@@ -4,7 +4,7 @@ Itens que faltam para completar o site. Cada um diz onde fica no código e o que
 
 | # | Pendência | Onde fica | O que muda quando chegar |
 |---|---|---|---|
-| 1 | **Logo** em SVG ou PNG com fundo transparente. Hoje não há nenhum arquivo de logo no projeto. | `site.logo` em `lib/data.ts` (hoje `undefined`). Coloque o arquivo em `public/brand/` (ex.: `logo-beninca.png`). | Preencha `logo: { src: '/brand/logo-beninca.png', width, height }`. O cabeçalho troca o wordmark tipográfico pela logo (`components/ui/Logo.tsx`). Os ícones (`app/icon.tsx`, `app/apple-icon.tsx`) usam um "B" dourado e podem passar a usar a logo. |
+| 1 | **Logo em vetor (SVG) ou PNG com fundo transparente.** Recebida em JPG e WebP (640×640, fundo preto); o site já usa essa versão. | `public/brand/` e `site.logo` (`lib/data.ts`). | Com o vetor, refazer `beninca-wordmark.png` (cabeçalho), `app/icon.png`, `app/apple-icon.png` e `public/brand/icon-*.png` com mais nitidez, e a logo do rodapé sem o quadrado preto. |
 | 2 | **Fotos reais** dos três carros (lateral e 3/4 de frente) e do motorista. | Campo `image` de cada carro em `fleet` (`lib/data.ts`). Arquivos em `public/frota/` (WebP/AVIF, até 250KB, ex.: `transfer-executivo-joinville-corolla.webp`). | A ficha da frota troca a moldura "Foto real em breve" pela foto, com `next/image`. |
 | 3 | **CEP** do endereço. | `site.address.postalCode` | Aparece no rodapé e entra no JSON-LD (`PostalAddress`). |
 | 4 | **Coordenadas** (latitude e longitude) da base. | `site.geo` | Entram no JSON-LD (`GeoCoordinates`). |

@@ -8,11 +8,11 @@ export const en: Dictionary = {
       'Executive transfers from Joinville and nearby cities to Curitiba, Navegantes and Florianópolis airports. English-speaking driver, 24/7 by booking.',
     ogAlt: 'Beninca Executive Transport: transfers from Joinville to JOI, NVT, CWB and FLN airports.',
     ogKicker: 'Executive transport · Joinville – Brazil',
+    ogHeadline: 'Airport transfers in the region',
   },
 
   ui: {
     skipLink: 'Skip to content',
-    tagline: 'Executive Transport',
     homeLinkLabel: 'Beninca Executive Transport, home',
     headerCta: 'Get a quote',
     menuOpen: 'Open menu',

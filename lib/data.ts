@@ -26,6 +26,12 @@ export const site: SiteConfig = {
     country: 'BR',
   },
   openingHours: 'Mo-Su 00:00-23:59',
+  logo: {
+    /** Header: "BENINCA / TRANSPORTE EXECUTIVO" cut from the client logo, transparent background. */
+    wordmark: { src: '/brand/beninca-wordmark.png', width: 528, height: 110 },
+    /** Full square logo as sent by the client (black background). */
+    full: { src: '/brand/beninca-logo.webp', jpg: '/brand/beninca-logo.jpg', width: 640, height: 640 },
+  },
   wordmark: 'Beninca',
   languages: ['pt-BR', 'en'],
 };

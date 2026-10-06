@@ -9,7 +9,7 @@ export const BUSINESS_ID = `${SITE_URL}/#business`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 /** Paths of the generated brand images. Kept here so schema and manifest agree. */
-export const ICON_512_PATH = '/icon/pwa-512';
+export const ICON_512_PATH = '/brand/icon-512.png';
 export const OG_PATH: Record<Locale, string> = { 'pt-BR': '/og-pt.png', en: '/og-en.png' };
 
 /** Pick-up cities plus the cities of the airports served. */
@@ -28,8 +28,8 @@ function businessNode(description: string): Node {
     taxID: site.cnpj,
     description,
     url: absoluteUrl('/'),
-    logo: absoluteUrl(ICON_512_PATH),
-    image: absoluteUrl(OG_PATH['pt-BR']),
+    logo: absoluteUrl(site.logo.full.jpg),
+    image: [absoluteUrl(site.logo.full.jpg), absoluteUrl(OG_PATH['pt-BR'])],
     telephone: site.phoneE164,
     email: site.email,
     address: {

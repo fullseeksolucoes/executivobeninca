@@ -16,7 +16,7 @@ export function Header({ t, locale, whatsappHref }: Props) {
     <header className="sticky top-[env(safe-area-inset-top,0px)] z-40 border-b border-line bg-ink">
       <div className="wrap flex h-[76px] items-center justify-between gap-5">
         <a href={localePath[locale]} aria-label={ui.homeLinkLabel} className="relative z-[60] flex shrink-0 items-center">
-          <Logo tagline={ui.tagline} priority />
+          <Logo priority />
         </a>
 
         <div className="flex items-center gap-4 xl:gap-5">

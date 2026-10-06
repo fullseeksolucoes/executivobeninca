@@ -23,8 +23,11 @@ export interface SiteConfig {
   geo?: { lat: number; lng: number };
   googleBusinessUrl?: string;
   openingHours: string;
-  /** Client logo. While undefined, the typographic wordmark is used. */
-  logo?: { src: string; width: number; height: number };
+  /** Client logo files (public/brand). */
+  logo: {
+    wordmark: { src: string; width: number; height: number };
+    full: { src: string; jpg: string; width: number; height: number };
+  };
   wordmark: string;
   /** Languages spoken by the drivers (BCP 47), used in the schema. */
   languages: string[];

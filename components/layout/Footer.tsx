@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { FinalCta } from '@/components/sections/FinalCta';
 import { Icon } from '@/components/ui/Icon';
 import { trackAttrs } from '@/lib/analytics';
@@ -22,9 +23,17 @@ export function Footer({ t }: { t: Dictionary }) {
 
       <div className="wrap grid gap-10 border-t border-line py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
+          <Image
+            src={site.logo.full.src}
+            alt={site.name}
+            width={site.logo.full.width}
+            height={site.logo.full.height}
+            sizes="128px"
+            className="mb-8 h-32 w-32 border border-line"
+          />
           <h2 className={colTitle}>{footer.columns.contact}</h2>
           <address className="not-italic">
-            <a href={`mailto:${site.email}`} className={`${linkClass} gap-2 [overflow-wrap:anywhere]`}>
+            <a href={`mailto:${site.email}`} className={`${linkClass} gap-2 text-[15px] [overflow-wrap:anywhere]`}>
               <Icon name="mail" size={18} className="shrink-0" />
               {site.email}
             </a>

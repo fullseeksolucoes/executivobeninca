@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import { site } from '@/lib/data';
 
-/** Client logo when available; typographic wordmark until then. */
-export function Logo({ tagline, priority = false }: { tagline: string; priority?: boolean }) {
-  if (site.logo) {
-    const height = 56;
-    const width = Math.round((site.logo.width / site.logo.height) * height);
-    return <Image src={site.logo.src} alt={site.name} width={width} height={height} priority={priority} className="h-14 w-auto" />;
-  }
+/** Header logo: the "BENINCA / TRANSPORTE EXECUTIVO" lockup from the client logo. */
+export function Logo({ priority = false }: { priority?: boolean }) {
+  const { src, width, height } = site.logo.wordmark;
   return (
-    <span className="flex flex-col leading-none">
-      <span className="font-display text-[30px] font-black uppercase tracking-[0.04em] text-gold">{site.wordmark}</span>{' '}
-      <span className="mt-1 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-text-2">{tagline}</span>
-    </span>
+    <Image
+      src={src}
+      alt={site.name}
+      width={width}
+      height={height}
+      priority={priority}
+      sizes="(min-width: 640px) 231px, 173px"
+      className="h-9 w-auto sm:h-12"
+    />
   );
 }
