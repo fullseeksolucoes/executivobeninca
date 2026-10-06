@@ -90,7 +90,6 @@ export const fleet: Vehicle[] = [
     model: 'Toyota Corolla',
     year: 2025,
     passengers: 4,
-    shape: 'sedan',
     luggage: { value: '', confirmed: false },
     extras: ['Água', 'Balas', 'Carregador de celular'],
   },
@@ -100,7 +99,6 @@ export const fleet: Vehicle[] = [
     model: 'Honda Civic',
     year: 2022,
     passengers: 4,
-    shape: 'sedan',
     luggage: { value: '', confirmed: false },
     extras: ['Água', 'Balas', 'Carregador de celular'],
   },
@@ -110,7 +108,6 @@ export const fleet: Vehicle[] = [
     model: 'Honda WR-V',
     year: 2027,
     passengers: 4,
-    shape: 'suv',
     luggage: { value: '', confirmed: false },
     extras: ['Água', 'Balas', 'Carregador de celular', 'Mais espaço para bagagem'],
   },
@@ -183,9 +180,6 @@ export const hero = {
     'Transfer executivo saindo de Joinville para os aeroportos de Curitiba, Navegantes, Florianópolis e Joinville. Sedans e SUV executivos, motoristas experientes e nota fiscal para empresas.',
   badgeTitle: 'Carro com internet Starlink, sob solicitação.',
   badgeText: 'Reuniões, e-mails e chamadas de vídeo sem cair, do começo ao fim do trajeto.',
-  carLabel: 'Ilustração animada de um sedan executivo desenhado em traço dourado, rodando por uma pista à noite.',
-  captionFleet: 'Corolla 2025 · Civic 2022 · WR‑V 2027',
-  captionStarlink: 'Carro com Starlink sob solicitação',
 };
 
 export const quoteForm = {

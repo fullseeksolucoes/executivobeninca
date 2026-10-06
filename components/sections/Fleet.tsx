@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { CarSketch } from '@/components/ui/CarLineArt';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { WhatsAppLink } from '@/components/ui/WhatsAppLink';
 import { fleet, fleetSection as copy } from '@/lib/data';
@@ -23,12 +22,9 @@ export function Fleet() {
                 {car.image ? (
                   <Image src={car.image.src} alt={car.image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
                 ) : (
-                  <>
-                    <CarSketch shape={car.shape} />
-                    <span className="absolute bottom-3 left-5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted" aria-hidden="true">
-                      {copy.photoPending}
-                    </span>
-                  </>
+                  <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted" aria-hidden="true">
+                    {copy.photoPending}
+                  </span>
                 )}
               </div>
 

@@ -82,7 +82,6 @@ export interface Vehicle {
   model: string;
   year: number;
   passengers: number;
-  shape: 'sedan' | 'suv';
   luggage?: Confirmable<{ value: string }>;
   extras: string[];
   image?: { src: string; alt: string };

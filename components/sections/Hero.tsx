@@ -1,10 +1,9 @@
-import { CarLineArt } from '@/components/ui/CarLineArt';
 import { Icon } from '@/components/ui/Icon';
 import { hero } from '@/lib/data';
 
 export function Hero() {
   return (
-    <section aria-labelledby="hero-titulo" className="pt-10 md:pt-16">
+    <section aria-labelledby="hero-titulo" className="pb-14 pt-10 md:pb-20 md:pt-16">
       <div className="wrap">
         <ul className="label-mono flex flex-wrap gap-x-6 gap-y-2">
           {hero.labels.map((l, i) => (
@@ -29,14 +28,6 @@ export function Hero() {
             </p>
           </div>
         </div>
-      </div>
-
-      <div className="mt-10 border-y border-line md:mt-14">
-        <CarLineArt label={hero.carLabel} />
-      </div>
-      <div className="wrap flex flex-col gap-2 py-4 font-mono uppercase tracking-[0.12em] sm:flex-row sm:items-baseline sm:justify-between">
-        <p className="text-[13px] text-muted">{hero.captionFleet}</p>
-        <p className="text-[14px] font-semibold text-gold">{hero.captionStarlink}</p>
       </div>
     </section>
   );

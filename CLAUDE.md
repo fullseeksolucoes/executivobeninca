@@ -25,7 +25,7 @@ Site institucional da **Beninca Transporte Executivo** (Joinville, SC). Transfer
 - Eventos de analytics: `track()` em `lib/analytics.ts`.
 - Pendências do cliente: `PENDENCIAS.md`.
 - Logo: ainda não existe arquivo. Enquanto `site.logo` for `undefined`, o cabeçalho usa um wordmark tipográfico (`components/ui/Logo.tsx`).
-- Animações: `CarLineArt` e `FlapTiles` são CSS puro; `InView` só alterna classes (pausa fora da tela). Sem JS, ou com reduced motion, aparece o estado final.
+- Animações: `FlapTiles` é CSS puro; `InView` só alterna classes quando entra na tela. Sem JS, ou com reduced motion, aparece o estado final. O site não tem animação de carro.
 
 ## Dados confirmados do cliente
 
