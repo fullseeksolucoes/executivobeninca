@@ -1,14 +1,20 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
-import { nav, site, ui } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
+import { site } from '@/lib/data';
 import { telLink } from '@/lib/whatsapp';
 
 const MENU_ID = 'menu-mobile';
 
-export function MobileMenu({ whatsappHref }: { whatsappHref: string }) {
+interface Props {
+  nav: Dictionary['nav'];
+  ui: Dictionary['ui'];
+  whatsappHref: string;
+}
+
+export function MobileMenu({ nav, ui, whatsappHref }: Props) {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -57,23 +63,19 @@ export function MobileMenu({ whatsappHref }: { whatsappHref: string }) {
           <ul className="border-t border-line">
             {nav.map((item) => (
               <li key={item.href} className="border-b border-line">
-                <Link
-                  href={item.href}
-                  onClick={close}
-                  className="display flex min-h-[64px] items-center justify-between text-[40px] hover:text-gold"
-                >
+                <a href={item.href} onClick={close} className="display flex min-h-[64px] items-center justify-between text-[40px] hover:text-gold">
                   {item.label}
                   <span aria-hidden="true" className="font-mono text-xl text-gold">
                     →
                   </span>
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
           <div className="mt-8 grid gap-3">
-            <Link href={ui.headerCtaHref} onClick={close} className="btn btn-gold btn-lg">
+            <a href="#cotacao" onClick={close} className="btn btn-gold btn-lg">
               {ui.headerCta} <span className="arrow" aria-hidden="true">→</span>
-            </Link>
+            </a>
             <a
               href={whatsappHref}
               target="_blank"
@@ -83,7 +85,7 @@ export function MobileMenu({ whatsappHref }: { whatsappHref: string }) {
               data-track="click_whatsapp"
               data-track-location="header"
             >
-              <Icon name="whatsapp" /> {ui.mobileBarWhatsapp} <span className="sr-only">{ui.newTab}</span>
+              <Icon name="whatsapp" /> {ui.whatsapp} <span className="sr-only">{ui.newTab}</span>
             </a>
             <a href={telLink} className="btn btn-outline btn-lg" data-track="click_phone" data-track-location="header">
               <Icon name="phone" /> {site.phoneDisplay}

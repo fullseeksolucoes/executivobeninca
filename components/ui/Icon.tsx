@@ -1,4 +1,4 @@
-type IconName = 'whatsapp' | 'phone' | 'signal' | 'menu' | 'close' | 'instagram' | 'mail' | 'pin';
+type IconName = 'whatsapp' | 'phone' | 'signal' | 'globe' | 'menu' | 'close' | 'instagram' | 'mail' | 'pin';
 
 const paths: Record<IconName, React.ReactNode> = {
   whatsapp: (
@@ -16,6 +16,13 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="M8.5 15.8a5 5 0 0 1 7 0" />
       <path d="M5.3 12.6a9.5 9.5 0 0 1 13.4 0" />
       <path d="M2.2 9.4a14 14 0 0 1 19.6 0" />
+    </>
+  ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M3.5 12h17" />
+      <path d="M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5s1.1-6.1 3.4-8.5z" />
     </>
   ),
   menu: (

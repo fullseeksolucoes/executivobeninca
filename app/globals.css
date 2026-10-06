@@ -602,7 +602,7 @@ select.field-input {
 }
 @media (min-width: 900px) {
   .coast {
-    grid-template-columns: repeat(9, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     padding-left: 0;
     padding-top: 0;
   }
@@ -618,7 +618,7 @@ select.field-input {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    padding: 34px 8px 0 0;
+    padding: 34px 20px 0 0;
   }
   .coast-dot {
     left: 0;

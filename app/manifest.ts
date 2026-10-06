@@ -1,12 +1,13 @@
 import type { MetadataRoute } from 'next';
-import { homeSeo, site } from '@/lib/data';
+import { site } from '@/lib/data';
+import { getDictionary } from '@/lib/i18n';
 import { ICON_512_PATH } from '@/lib/schema';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: site.name,
     short_name: site.shortName,
-    description: homeSeo.description,
+    description: getDictionary('pt-BR').meta.description,
     lang: 'pt-BR',
     start_url: '/',
     display: 'standalone',

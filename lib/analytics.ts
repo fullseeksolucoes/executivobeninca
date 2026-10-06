@@ -8,10 +8,8 @@ export type WhatsappLocation =
   | 'footer'
   | 'mobile_bar'
   | 'floating'
-  | 'route_page'
-  | 'service_page'
-  | 'corporate'
-  | 'not_found';
+  | 'services'
+  | 'corporate';
 
 declare global {
   interface Window {

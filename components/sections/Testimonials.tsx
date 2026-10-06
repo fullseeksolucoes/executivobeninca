@@ -1,9 +1,11 @@
-import { testimonials, testimonialsSection as copy, site } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
+import { site, testimonials } from '@/lib/data';
 
 /** Renders only when there are real testimonials. Shows a single quote. */
-export function Testimonials() {
+export function Testimonials({ t }: { t: Dictionary }) {
   const item = testimonials[0];
   if (!item) return null;
+  const copy = t.testimonials;
   const googleUrl = item.source === 'google' ? site.googleBusinessUrl : undefined;
 
   return (
@@ -14,7 +16,9 @@ export function Testimonials() {
           {copy.heading}
         </h2>
         <figure>
-          <blockquote className="display max-w-5xl text-[clamp(36px,4.6vw,72px)]">“{item.quote}”</blockquote>
+          <blockquote lang="pt-BR" className="display max-w-5xl text-[clamp(36px,4.6vw,72px)]">
+            “{item.quote}”
+          </blockquote>
           <figcaption className="label-mono mt-8">
             {item.name}
             {item.role && ` · ${item.role}`}

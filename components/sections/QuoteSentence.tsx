@@ -2,17 +2,17 @@
 
 import { useRef, useState } from 'react';
 import { track, type WhatsappLocation } from '@/lib/analytics';
-import { quoteForm as copy } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
 import { messages, waLink } from '@/lib/whatsapp';
 
 type Field = 'origin' | 'destination' | 'date';
 type Errors = Partial<Record<Field, string>>;
 
 interface Props {
-  /** Prefix for stable field ids (more than one form can exist per page). */
+  /** Prefix for stable field ids. */
   idPrefix: string;
-  defaultOrigin?: string;
-  defaultDestination?: string;
+  copy: Dictionary['quoteForm'];
+  templates: Dictionary['whatsapp'];
   location: WhatsappLocation;
 }
 
@@ -27,7 +27,7 @@ function todayIso() {
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 }
 
-export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination = '', location }: Props) {
+export function QuoteSentence({ idPrefix, copy, templates, location }: Props) {
   const [errors, setErrors] = useState<Errors>({});
   const formRef = useRef<HTMLFormElement>(null);
   const id = (name: string) => `${idPrefix}-${name}`;
@@ -57,14 +57,16 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
     const origin = String(data.get('origin'));
     const destination = String(data.get('destination')).trim();
     const pax = String(data.get('pax'));
-    const text = messages.quote({
+    const text = messages(templates).quote({
       origin,
       destination,
       date: toDayMonth(String(data.get('date'))),
-      time: String(data.get('time') ?? '') || copy.timeFallback,
+      time: String(data.get('time') ?? ''),
+      timeFallback: copy.timeFallback,
       pax,
       flight: String(data.get('flight') ?? '').trim() || copy.flightFallback,
       starlink: data.get('starlink') ? copy.yes : copy.no,
+      english: data.get('english') ? copy.yes : copy.no,
     });
 
     track('generate_lead', { origin, destination, pax, location });
@@ -84,7 +86,13 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
     </span>
   );
 
-  const hasErrors = Object.keys(errors).length > 0;
+  const toggle = (name: 'starlink' | 'english') => (
+    <label className="toggle" htmlFor={id(name)}>
+      <input id={id(name)} name={name} type="checkbox" value="1" />
+      <span className="toggle-track" aria-hidden="true" />
+      {copy.labels[name]}
+    </label>
+  );
 
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} data-hide-cta="" aria-describedby={id('note')}>
@@ -95,13 +103,13 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
             <label htmlFor={id('origin')} className="sr-only">
               {copy.labels.origin}
             </label>
-            <select {...fieldProps('origin')} defaultValue={defaultOrigin} className="quote-input" autoComplete="off">
+            <select {...fieldProps('origin')} defaultValue="" className="quote-input" autoComplete="off">
               <option value="" disabled>
                 {copy.originPlaceholder}
               </option>
               {copy.origins.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
+                <option key={o} value={o}>
+                  {o}
                 </option>
               ))}
             </select>
@@ -118,7 +126,6 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
             <input
               {...fieldProps('destination')}
               type="text"
-              defaultValue={defaultDestination}
               placeholder={copy.placeholders.destination}
               autoComplete="off"
               enterKeyHint="next"
@@ -155,10 +162,10 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
             <label htmlFor={id('pax')} className="sr-only">
               {copy.labels.pax}
             </label>
-            <select id={id('pax')} name="pax" defaultValue={copy.paxOptions[0].value} className="quote-input">
+            <select id={id('pax')} name="pax" defaultValue={copy.paxOptions[0]} className="quote-input">
               {copy.paxOptions.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
+                <option key={o} value={o}>
+                  {o}
                 </option>
               ))}
             </select>
@@ -169,7 +176,7 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
         </span>
       </div>
 
-      <div className="mt-10 grid gap-6 border-t border-line pt-8 md:grid-cols-[minmax(0,1fr)_auto_auto] md:items-end md:gap-8">
+      <div className="mt-10 grid gap-6 border-t border-line pt-8 lg:grid-cols-[minmax(0,1fr)_auto_auto] lg:items-end lg:gap-8">
         <div className="max-w-xs">
           <label htmlFor={id('flight')} className="field-label">
             {copy.labels.flight}
@@ -184,18 +191,17 @@ export function QuoteSentence({ idPrefix, defaultOrigin = '', defaultDestination
             className="field-input"
           />
         </div>
-        <label className="toggle" htmlFor={id('starlink')}>
-          <input id={id('starlink')} name="starlink" type="checkbox" value="sim" />
-          <span className="toggle-track" aria-hidden="true" />
-          {copy.labels.starlink}
-        </label>
-        <button type="submit" className="btn btn-gold btn-lg w-full md:w-auto">
+        <div className="grid gap-1">
+          {toggle('starlink')}
+          {toggle('english')}
+        </div>
+        <button type="submit" className="btn btn-gold btn-lg w-full lg:w-auto">
           {copy.submit} <span className="arrow" aria-hidden="true">→</span>
         </button>
       </div>
 
       <p role="status" className="mt-4 font-mono text-[13px] text-[#f0a48f]">
-        {hasErrors ? copy.errorSummary : ''}
+        {Object.keys(errors).length ? copy.errorSummary : ''}
       </p>
       <p id={id('note')} className="mt-2 text-[15px] text-muted">
         {copy.note}

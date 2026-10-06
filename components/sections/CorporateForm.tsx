@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { track } from '@/lib/analytics';
-import { corporate } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
 import { messages, waLink } from '@/lib/whatsapp';
 
 type Field = 'company' | 'name' | 'email' | 'volume';
@@ -11,8 +11,13 @@ type Errors = Partial<Record<Field, string>>;
 const FIELDS: Field[] = ['company', 'name', 'email', 'volume'];
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function CorporateForm({ idPrefix }: { idPrefix: string }) {
-  const copy = corporate.form;
+interface Props {
+  idPrefix: string;
+  copy: Dictionary['corporate']['form'];
+  templates: Dictionary['whatsapp'];
+}
+
+export function CorporateForm({ idPrefix, copy, templates }: Props) {
   const [errors, setErrors] = useState<Errors>({});
   const formRef = useRef<HTMLFormElement>(null);
   const id = (name: string) => `${idPrefix}-${name}`;
@@ -33,7 +38,7 @@ export function CorporateForm({ idPrefix }: { idPrefix: string }) {
       return;
     }
 
-    const text = messages.corporate({
+    const text = messages(templates).corporate({
       company: value('company'),
       name: value('name'),
       email: value('email'),

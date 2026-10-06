@@ -1,24 +1,17 @@
 import type { WhatsappLocation } from '@/lib/analytics';
-import { quoteForm } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
 import { QuoteSentence } from './QuoteSentence';
 
-interface Props {
-  id?: string;
-  heading?: string;
-  defaultOrigin?: string;
-  defaultDestination?: string;
-  location: WhatsappLocation;
-}
-
-export function QuoteSection({ id = 'cotacao', heading = quoteForm.heading, defaultOrigin, defaultDestination, location }: Props) {
+export function QuoteSection({ t, location }: { t: Dictionary; location: WhatsappLocation }) {
+  const copy = t.quoteForm;
   return (
-    <section id={id} aria-labelledby={`${id}-titulo`} className="border-y border-line bg-ink-2 py-14 md:py-20">
+    <section id="cotacao" aria-labelledby="cotacao-titulo" className="border-y border-line bg-ink-2 py-14 md:py-20">
       <div className="wrap">
-        <p className="label-mono mb-3">{quoteForm.sectionLabel}</p>
-        <h2 id={`${id}-titulo`} className="display mb-8 text-[clamp(32px,3vw,44px)] md:mb-10">
-          {heading}
+        <p className="label-mono mb-3">{copy.sectionLabel}</p>
+        <h2 id="cotacao-titulo" className="display mb-8 text-[clamp(32px,3vw,44px)] md:mb-10">
+          {copy.heading}
         </h2>
-        <QuoteSentence idPrefix={id} defaultOrigin={defaultOrigin} defaultDestination={defaultDestination} location={location} />
+        <QuoteSentence idPrefix="cotacao" copy={copy} templates={t.whatsapp} location={location} />
       </div>
     </section>
   );

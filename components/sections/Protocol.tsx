@@ -1,7 +1,8 @@
 import { SectionTitle } from '@/components/ui/SectionTitle';
-import { protocol as copy } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
 
-export function Protocol() {
+export function Protocol({ t }: { t: Dictionary }) {
+  const copy = t.protocol;
   const clauses = copy.clauses.filter((c) => c.confirmed);
   return (
     <section aria-labelledby="protocolo-titulo" className="bg-paper py-20 text-ink md:py-28">

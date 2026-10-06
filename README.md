@@ -1,6 +1,6 @@
 # Beninca Transporte Executivo — site
 
-Site institucional da Beninca Transporte Executivo (Joinville, SC). Next.js 16 (App Router), TypeScript, Tailwind CSS 4. Todas as páginas são geradas de forma estática.
+Landing page da Beninca Transporte Executivo (Joinville, SC), em português (`/`) e inglês (`/en`). Next.js 16 (App Router), TypeScript, Tailwind CSS 4. Tudo é gerado de forma estática.
 
 ## Rodar
 
@@ -26,36 +26,37 @@ Copie `.env.example` para `.env.local`.
 
 ## Onde editar o conteúdo
 
-**Todo o texto do site fica em `lib/data.ts`** (tipos em `lib/types.ts`). Os componentes não têm texto próprio.
+O site é uma **única página**, em dois idiomas.
 
-- Dados do negócio: `site`
-- Aeroportos: `airports`
-- Frota: `fleet`
-- Seções da home: `hero`, `quoteForm`, `departureBoard`, `coastLine`, `servicesSection`, `fleetSection`, `protocol`, `corporate`, `homeFaq`, `finalCta`, `footer`
-- Páginas de rota: `routes`
-- Páginas de serviço: `services`
-- `/empresas`: `companiesPage`
-- Política de privacidade: `privacyPage`
-- Data do conteúdo (usada no sitemap): `CONTENT_UPDATED`. Atualize quando mudar o texto.
+- **Textos:** `lib/content/pt.ts` (português) e `lib/content/en.ts` (inglês). Os dois têm a mesma estrutura; o TypeScript acusa se faltar algo no inglês. Toda mudança de texto deve ser feita nos dois.
+- **Fatos do negócio** (iguais nos dois idiomas): `lib/data.ts`
+  - `site`: nome, telefone, e-mail, endereço, CNPJ, idiomas do motorista
+  - `airports`: aeroportos do painel e tempos aproximados
+  - `serviceArea`: cidades atendidas (ordem de norte a sul)
+  - `fleet`: carros
+  - `testimonials`: depoimentos
+  - `CONTENT_UPDATED`: data do conteúdo (sitemap e política de privacidade)
+- Mensagens prontas do WhatsApp: chave `whatsapp` de cada dicionário; a montagem fica em `lib/whatsapp.ts`.
+- Ordem das seções: `components/LandingPage.tsx`.
+- A política de privacidade é um bloco expansível no rodapé (`#privacidade`).
 
 Outros pontos únicos:
 
 - URL do site: `lib/site.ts`
-- Links de WhatsApp e mensagens prontas: `lib/whatsapp.ts` (`waLink()` e `messages`)
+- Idiomas e URLs de cada idioma: `lib/i18n.ts`
 - JSON-LD: `lib/schema.ts`
-- Metadata das páginas: `lib/seo.ts`
+- Metadata e `hreflang`: `lib/seo.ts`
 - Eventos de analytics: `lib/analytics.ts` (`track()`). Links server-side usam `data-track`, lido por `components/layout/AnalyticsListener.tsx`.
 
-## Adicionar uma nova rota
+## Idiomas
 
-Acrescente um objeto ao array `routes` em `lib/data.ts`, com:
+- `/` em português (`app/(pt)`) e `/en` em inglês (`app/(en)/en`). Cada um tem o próprio root layout, com `<html lang>` correto. Trocar de idioma recarrega a página.
+- O botão PT/EN fica no cabeçalho. As duas versões apontam uma para a outra com `hreflang`, e o sitemap lista as duas.
+- A página 404 é bilíngue (`app/global-not-found.tsx`).
 
-- `slug` único (vira `/transfer/{slug}`)
-- textos únicos, de 400 a 700 palavras somando `lead`, `sections`, `about` e `faq`
-- `boardCode` (letras do painel), `approxTime` e `approxTimeConfirmed`
-- `quote.origin` (um dos valores de `quoteForm.origins`) e `quote.destination`
+## Adicionar uma cidade atendida
 
-A página, a imagem OG, o sitemap, o JSON-LD, a linha no painel de saídas, os links do rodapé e de "Outras rotas" são gerados a partir dele. Não repita parágrafos de outras rotas.
+Acrescente `{ name: 'Cidade' }` em `serviceArea` (`lib/data.ts`), na posição certa de norte a sul. Atualize também, nos dois dicionários, o texto `region.text`, a lista de origens `quoteForm.origins` e a pergunta "Vocês atendem fora de Joinville?" do FAQ.
 
 ## Ativar os depoimentos
 
@@ -67,12 +68,12 @@ Veja `PENDENCIAS.md`. Itens não confirmados ficam com `confirmed: false` e não
 
 ## Validar os dados estruturados
 
-Cada página tem um único `<script type="application/ld+json">` com `@graph` (`LocalBusiness`/`TaxiService`, `WebSite` e, conforme a página, `Service`, `FAQPage` e `BreadcrumbList`).
+Cada idioma tem um único `<script type="application/ld+json">` com `@graph`: `LocalBusiness`/`TaxiService`, `WebSite`, `WebPage` e `FAQPage`.
 
 1. Publique (ou use um túnel para o ambiente local).
-2. Teste cada tipo de página no [Rich Results Test](https://search.google.com/test/rich-results): home, uma rota, um serviço e `/empresas`.
+2. Teste `/` e `/en` no [Rich Results Test](https://search.google.com/test/rich-results).
 3. Confira também no [Schema Markup Validator](https://validator.schema.org/).
-4. Esperado: `LocalBusiness`, `FAQPage` e `BreadcrumbList` reconhecidos, sem erros.
+4. Esperado: `LocalBusiness` e `FAQPage` reconhecidos, sem erros.
 
 ## Google Meu Negócio
 
@@ -96,4 +97,4 @@ Cada página tem um único `<script type="application/ld+json">` com `@graph` (`
 
 - Big Shoulders Display (títulos): servida localmente de `assets/fonts/` (corte opsz 72, pesos 800 e 900, subconjunto latin), com fallback de largura ajustada em `app/globals.css`.
 - Instrument Sans e IBM Plex Mono: `next/font/google`.
-- Os `.ttf` em `assets/fonts/` são usados só nas imagens OG e nos ícones gerados por código.
+- Os `.ttf` em `assets/fonts/` são usados só nas imagens OG (`/og-pt.png`, `/og-en.png`) e nos ícones gerados por código.

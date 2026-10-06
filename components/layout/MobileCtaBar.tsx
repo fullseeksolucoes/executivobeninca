@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
-import { ui } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
 import { telLink } from '@/lib/whatsapp';
 
 /**
@@ -10,7 +10,7 @@ import { telLink } from '@/lib/whatsapp';
  * Both hide while an element marked with `data-hide-cta` (the quote forms) is
  * on screen, so they never cover the form's submit button.
  */
-export function MobileCtaBar({ whatsappHref }: { whatsappHref: string }) {
+export function MobileCtaBar({ whatsappHref, ui }: { whatsappHref: string; ui: Dictionary['ui'] }) {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -44,11 +44,11 @@ export function MobileCtaBar({ whatsappHref }: { whatsappHref: string }) {
           data-track="click_whatsapp"
           data-track-location="mobile_bar"
         >
-          <Icon name="whatsapp" /> {ui.mobileBarWhatsapp}
+          <Icon name="whatsapp" /> {ui.whatsapp}
           <span className="sr-only">{ui.newTab}</span>
         </a>
         <a href={telLink} className="btn btn-outline h-14 bg-ink" data-track="click_phone" data-track-location="mobile_bar">
-          <Icon name="phone" /> {ui.mobileBarCall}
+          <Icon name="phone" /> {ui.call}
         </a>
       </div>
 
@@ -62,7 +62,7 @@ export function MobileCtaBar({ whatsappHref }: { whatsappHref: string }) {
         data-track-location="floating"
         inert={hidden}
       >
-        <Icon name="whatsapp" /> {ui.floatingWhatsapp}
+        <Icon name="whatsapp" /> {ui.whatsapp}
       </a>
     </>
   );

@@ -1,25 +1,30 @@
-import Link from 'next/link';
 import { FinalCta } from '@/components/sections/FinalCta';
 import { Icon } from '@/components/ui/Icon';
 import { trackAttrs } from '@/lib/analytics';
-import { CONTENT_UPDATED, footer, routes, site } from '@/lib/data';
+import type { Dictionary } from '@/lib/content/pt';
+import { CONTENT_UPDATED, serviceArea, site } from '@/lib/data';
+import { GA_ID } from '@/lib/site';
 
 const year = CONTENT_UPDATED.slice(0, 4);
+const updated = CONTENT_UPDATED.split('-').reverse().join('/');
 
 const colTitle = 'label-mono mb-5';
 const linkClass = 'inline-flex min-h-[44px] items-center text-text-2 underline-offset-4 hover:text-gold hover:underline';
 
-export function Footer() {
+export function Footer({ t }: { t: Dictionary }) {
   const { address } = site;
+  const { footer, privacy } = t;
+  const privacySections = privacy.sections.filter((s) => !s.onlyWithAnalytics || GA_ID);
+
   return (
     <footer className="overflow-hidden border-t border-line">
-      <FinalCta />
+      <FinalCta t={t} />
 
       <div className="wrap grid gap-10 border-t border-line py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <h2 className={colTitle}>{footer.columns.contact}</h2>
           <address className="not-italic">
-            <a href={`mailto:${site.email}`} className={`${linkClass} gap-2 break-all`}>
+            <a href={`mailto:${site.email}`} className={`${linkClass} gap-2 [overflow-wrap:anywhere]`}>
               <Icon name="mail" size={18} className="shrink-0" />
               {site.email}
             </a>
@@ -43,28 +48,27 @@ export function Footer() {
         <nav aria-label={footer.siteNavLabel}>
           <h2 className={colTitle}>{footer.columns.site}</h2>
           <ul>
-            {footer.siteLinks.map((l) => (
+            {t.nav.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className={linkClass}>
+                <a href={l.href} className={linkClass}>
                   {l.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
         </nav>
 
-        <nav aria-label={footer.routesNavLabel}>
-          <h2 className={colTitle}>{footer.columns.routes}</h2>
-          <ul>
-            {routes.map((r) => (
-              <li key={r.slug}>
-                <Link href={`/transfer/${r.slug}`} className={linkClass}>
-                  {r.breadcrumb}
-                </Link>
-              </li>
-            ))}
+        <div>
+          <h2 className={colTitle}>{footer.columns.area}</h2>
+          <ul className="space-y-2 text-text-2">
+            {[...serviceArea]
+              .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+              .map((c) => (
+                <li key={c.name}>{c.name}</li>
+              ))}
           </ul>
-        </nav>
+          <p className="mt-4 font-mono text-[13px] uppercase tracking-[0.1em] text-muted">{footer.airportsLabel}</p>
+        </div>
 
         <div>
           <h2 className={colTitle}>{footer.columns.social}</h2>
@@ -93,13 +97,39 @@ export function Footer() {
       </div>
 
       <div className="border-t border-line">
-        <div className="wrap flex flex-col gap-2 py-6 font-mono text-[12px] uppercase tracking-[0.1em] text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>
+        <div className="wrap py-6">
+          <details id="privacidade" className="faq-item group">
+            <summary className="flex min-h-[44px] items-center gap-3 font-mono text-[12px] uppercase tracking-[0.1em] text-muted hover:text-gold">
+              <span className="faq-marker text-gold" aria-hidden="true">
+                ▸
+              </span>
+              {privacy.summary}
+            </summary>
+            <div className="max-w-3xl space-y-6 pb-4 pt-4">
+              <p className="label-mono">
+                {privacy.updatedLabel} {updated}
+              </p>
+              {privacySections.map((s) => (
+                <section key={s.heading}>
+                  <h3 className="font-semibold text-paper">{s.heading}</h3>
+                  {s.body.map((p) => (
+                    <p key={p.slice(0, 40)} className="mt-2 text-[15px] text-text-2">
+                      {p}
+                    </p>
+                  ))}
+                </section>
+              ))}
+              <p className="text-[15px] text-text-2">
+                {site.legalName} · {footer.cnpjLabel} {site.cnpj} ·{' '}
+                <a href={`mailto:${site.email}`} className="text-gold underline underline-offset-4 [overflow-wrap:anywhere]">
+                  {site.email}
+                </a>
+              </p>
+            </div>
+          </details>
+          <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
             © {year} {site.name} · {footer.cnpjLabel} {site.cnpj}
           </p>
-          <Link href="/politica-de-privacidade" className="inline-flex min-h-[44px] items-center underline-offset-4 hover:text-gold hover:underline">
-            {footer.privacy}
-          </Link>
         </div>
       </div>
 

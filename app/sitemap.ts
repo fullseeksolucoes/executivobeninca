@@ -1,22 +1,15 @@
 import type { MetadataRoute } from 'next';
-import { CONTENT_UPDATED, routes, services } from '@/lib/data';
+import { CONTENT_UPDATED } from '@/lib/data';
+import { localePath, locales } from '@/lib/i18n';
 import { absoluteUrl } from '@/lib/site';
 
-const lastModified = CONTENT_UPDATED;
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const entry = (path: string, priority: number): MetadataRoute.Sitemap[number] => ({
-    url: absoluteUrl(path),
-    lastModified,
+  const languages = Object.fromEntries(locales.map((l) => [l, absoluteUrl(localePath[l])]));
+  return locales.map((locale) => ({
+    url: absoluteUrl(localePath[locale]),
+    lastModified: CONTENT_UPDATED,
     changeFrequency: 'monthly',
-    priority,
-  });
-
-  return [
-    entry('/', 1),
-    ...routes.map((r) => entry(`/transfer/${r.slug}`, 0.9)),
-    ...services.map((s) => entry(`/servicos/${s.slug}`, 0.8)),
-    entry('/empresas', 0.8),
-    entry('/politica-de-privacidade', 0.2),
-  ];
+    priority: locale === 'pt-BR' ? 1 : 0.8,
+    alternates: { languages },
+  }));
 }

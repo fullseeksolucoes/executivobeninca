@@ -1,4 +1,5 @@
-import { site } from './data';
+import { airports, serviceArea, site } from './data';
+import { localePath, type Locale } from './i18n';
 import { SITE_URL, absoluteUrl } from './site';
 import type { FaqEntry } from './types';
 
@@ -9,9 +10,15 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 /** Paths of the generated brand images. Kept here so schema and manifest agree. */
 export const ICON_512_PATH = '/icon/pwa-512';
-export const OG_HOME_PATH = '/opengraph-image';
+export const OG_PATH: Record<Locale, string> = { 'pt-BR': '/og-pt.png', en: '/og-en.png' };
 
-export function businessNode(): Node {
+/** Pick-up cities plus the cities of the airports served. */
+function areaServed() {
+  const names = [...serviceArea.map((c) => c.name), ...airports.map((a) => a.city)];
+  return [...new Set(names)].map((name) => ({ '@type': 'City', name }));
+}
+
+function businessNode(description: string): Node {
   const { address, geo, googleBusinessUrl } = site;
   return {
     '@type': ['LocalBusiness', 'TaxiService'],
@@ -19,9 +26,10 @@ export function businessNode(): Node {
     name: site.name,
     legalName: site.legalName,
     taxID: site.cnpj,
+    description,
     url: absoluteUrl('/'),
     logo: absoluteUrl(ICON_512_PATH),
-    image: absoluteUrl(OG_HOME_PATH),
+    image: absoluteUrl(OG_PATH['pt-BR']),
     telephone: site.phoneE164,
     email: site.email,
     address: {
@@ -39,47 +47,44 @@ export function businessNode(): Node {
       opens: '00:00',
       closes: '23:59',
     },
-    areaServed: site.areaServed.map((name) => ({ '@type': 'City', name })),
+    areaServed: areaServed(),
     sameAs: [site.instagram, ...(googleBusinessUrl ? [googleBusinessUrl] : [])],
-    paymentAccepted: site.paymentAccepted,
+    paymentAccepted: 'Pix, cartão de crédito, cartão de débito',
     currenciesAccepted: 'BRL',
     knowsLanguage: site.languages,
   };
 }
 
-export function websiteNode(): Node {
+function websiteNode(): Node {
   return {
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     url: absoluteUrl('/'),
     name: site.name,
-    inLanguage: 'pt-BR',
+    inLanguage: ['pt-BR', 'en'],
     publisher: { '@id': BUSINESS_ID },
   };
 }
 
-export function serviceNode(s: { name: string; serviceType: string; path: string; description: string; areaServed?: string[] }): Node {
+function webPageNode(locale: Locale, title: string, description: string): Node {
+  const url = absoluteUrl(localePath[locale]);
   return {
-    '@type': 'Service',
-    '@id': `${absoluteUrl(s.path)}#service`,
-    name: s.name,
-    serviceType: s.serviceType,
-    description: s.description,
-    url: absoluteUrl(s.path),
-    provider: { '@id': BUSINESS_ID },
-    areaServed: (s.areaServed ?? site.areaServed).map((name) => ({ '@type': 'City', name })),
-    offers: {
-      '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
-      url: absoluteUrl(s.path),
-    },
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    inLanguage: locale,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': BUSINESS_ID },
   };
 }
 
-export function faqNode(items: FaqEntry[], path: string): Node {
+function faqNode(locale: Locale, items: FaqEntry[]): Node {
   return {
     '@type': 'FAQPage',
-    '@id': `${absoluteUrl(path)}#faq`,
+    '@id': `${absoluteUrl(localePath[locale])}#faq`,
+    inLanguage: locale,
     mainEntity: items.map((f) => ({
       '@type': 'Question',
       name: f.q,
@@ -88,22 +93,15 @@ export function faqNode(items: FaqEntry[], path: string): Node {
   };
 }
 
-export function breadcrumbNode(items: { name: string; path: string }[]): Node {
-  return {
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: item.name,
-      item: absoluteUrl(item.path),
-    })),
-  };
-}
-
-/** One `@graph` per page, always including the business and the website. */
-export function pageGraph(...nodes: Node[]) {
+/** The single `@graph` of the landing page. */
+export function landingGraph(locale: Locale, meta: { title: string; description: string }, faq: FaqEntry[]) {
   return {
     '@context': 'https://schema.org',
-    '@graph': [businessNode(), websiteNode(), ...nodes],
+    '@graph': [
+      businessNode(meta.description),
+      websiteNode(),
+      webPageNode(locale, meta.title, meta.description),
+      faqNode(locale, faq),
+    ],
   };
 }
