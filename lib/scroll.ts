@@ -2,13 +2,23 @@ import type Lenis from 'lenis';
 
 /**
  * In-page navigation, same approach as fullseek: Lenis scrolls to the section
- * (1.2s) and the URL is not changed. The section's `scroll-margin-top`
+ * and the URL is not changed. The section's `scroll-margin-top`
  * (globals.css) keeps it clear of the sticky header; Lenis reads it.
  */
 let lenisInstance: Lenis | null = null;
 
-/** Link clicks: 1.2s with Lenis' default exponential ease-out, as in fullseek. */
-const LINK_SCROLL = { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) };
+/**
+ * Link clicks. Lenis' default exponential ease-out covers most of the way in
+ * the first frames, so on this long page the jump looked instant. An
+ * ease-in-out curve with a duration that grows with the distance keeps the
+ * travel visible: 0.8s for nearby sections up to 1.4s for the far ones.
+ */
+const easeInOutQuad = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+function linkScroll(distance: number) {
+  const duration = Math.min(1.4, Math.max(0.8, 0.5 + Math.abs(distance) / 4000));
+  return { duration, easing: easeInOutQuad };
+}
 
 export function setLenis(lenis: Lenis | null) {
   lenisInstance = lenis;
@@ -31,7 +41,8 @@ export function scrollToSection(id: string) {
   if (!el) return;
   const lenis = getLenis();
   if (lenis) {
-    lenis.scrollTo(el, { ...LINK_SCROLL, onComplete: () => focusSection(el) });
+    const distance = el.getBoundingClientRect().top;
+    lenis.scrollTo(el, { ...linkScroll(distance), onComplete: () => focusSection(el) });
     return;
   }
   // Fallback before Lenis starts.
@@ -43,6 +54,6 @@ export function scrollToSection(id: string) {
 
 export function scrollToTop() {
   const lenis = getLenis();
-  if (lenis) lenis.scrollTo(0, LINK_SCROLL);
+  if (lenis) lenis.scrollTo(0, linkScroll(window.scrollY));
   else window.scrollTo({ top: 0, behavior: 'smooth' });
 }
