@@ -7,9 +7,11 @@ import { messages, waLink } from '@/lib/whatsapp';
 import { AnalyticsListener } from './AnalyticsListener';
 import { Footer } from './Footer';
 import { Header } from './Header';
+import { LenisProvider } from './LenisProvider';
 import { MobileCtaBar } from './MobileCtaBar';
 import { SkipLink } from './SkipLink';
 import { SmoothAnchors } from './SmoothAnchors';
+import 'lenis/dist/lenis.css';
 import '@/app/globals.css';
 
 /** Shared by both root layouts. */
@@ -41,6 +43,7 @@ export function Shell({ locale, children }: { locale: Locale; children: React.Re
         <Footer t={t} />
         <MobileCtaBar whatsappHref={whatsappHref} ui={t.ui} />
         <AnalyticsListener />
+        <LenisProvider />
         <SmoothAnchors />
         {GA_ID && (
           <>

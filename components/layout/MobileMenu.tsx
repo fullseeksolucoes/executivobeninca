@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import type { Dictionary } from '@/lib/content/pt';
 import { site } from '@/lib/data';
+import { getLenis } from '@/lib/scroll';
 import { telLink } from '@/lib/whatsapp';
 
 const MENU_ID = 'menu-mobile';
@@ -28,11 +29,14 @@ export function MobileMenu({ nav, ui, whatsappHref }: Props) {
       }
     };
     document.addEventListener('keydown', onKey);
+    const lenis = getLenis();
+    lenis?.stop();
     document.documentElement.style.overflow = 'hidden';
     panelRef.current?.querySelector<HTMLElement>('a')?.focus();
     return () => {
       document.removeEventListener('keydown', onKey);
       document.documentElement.style.overflow = '';
+      lenis?.start();
     };
   }, [open]);
 
@@ -56,6 +60,7 @@ export function MobileMenu({ nav, ui, whatsappHref }: Props) {
         id={MENU_ID}
         ref={panelRef}
         hidden={!open}
+        data-lenis-prevent=""
         className="fixed inset-0 z-50 overflow-y-auto bg-ink px-4 pb-10 pt-[calc(88px+env(safe-area-inset-top,0px))] lg:hidden"
       >
         <nav aria-label={ui.mobileNavLabel}>

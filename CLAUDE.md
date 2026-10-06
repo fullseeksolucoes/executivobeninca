@@ -17,8 +17,8 @@
 - Dois root layouts: `app/(pt)/layout.tsx` (`/`, `lang="pt-BR"`) e `app/(en)/layout.tsx` (`/en`, `lang="en"`), ambos usando `components/layout/Shell.tsx`. A 404 é `app/global-not-found.tsx` (bilíngue, flag `experimental.globalNotFound`).
 - Imagens OG com URL fixa: `app/og-pt.png/route.tsx` e `app/og-en.png/route.tsx` (dentro de route groups, `opengraph-image` ganha sufixo na URL).
 - Fontes (`app/fonts.ts`): Big Shoulders Display via `next/font/local` (`assets/fonts/`, opsz 72, pesos 800/900), Instrument Sans e IBM Plex Mono (sem preload) via `next/font/google`. O fallback com largura ajustada fica em `app/globals.css`.
-- Animações só em CSS. **Não adicionar** framer-motion, three.js, Lenis nem bibliotecas de ícones. O site não tem animação de carro.
-- Navegação na página: `components/layout/SmoothAnchors.tsx` intercepta links `#secao` e o link da logo e chama `scrollToSection()`/`scrollToY()` de `lib/scroll.ts` (1,2s, ease-out exponencial como o Lenis, desconto do cabeçalho, foco vai para a seção, instantâneo com reduced motion). Links novos só precisam de `href="#id"`.
+- Animações em CSS. **Não adicionar** framer-motion, three.js nem bibliotecas de ícones. O site não tem animação de carro. Exceção: **Lenis** (rolagem suave, igual ao projeto fullseek).
+- Rolagem e navegação na página (igual ao fullseek): `components/layout/LenisProvider.tsx` liga o Lenis (`duration: 1.2`, `smoothWheel`, `touchMultiplier: 2`; respeita reduced motion). `components/layout/SmoothAnchors.tsx` intercepta links `#secao` e o link da logo e chama `scrollToSection()`/`scrollToTop()` de `lib/scroll.ts`, **sem colocar `#secao` na URL**. O menu do celular fecha e a rolagem começa 150ms depois; o Lenis fica parado com o menu aberto. A folga do cabeçalho vem do `scroll-margin-top` das seções. Elementos com rolagem própria levam `data-lenis-prevent`. Links novos só precisam de `href="#id"`.
 - Server Components por padrão; `'use client'` só quando houver estado ou eventos.
 
 ## Onde fica cada coisa

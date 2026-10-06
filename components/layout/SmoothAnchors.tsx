@@ -1,17 +1,17 @@
 'use client';
 
 import { useEffect } from 'react';
-import { scrollToSection, scrollToY } from '@/lib/scroll';
+import { scrollToSection, scrollToTop } from '@/lib/scroll';
 
-/** Waits for the mobile menu to close before scrolling. */
+/** Waits for the mobile menu to close before scrolling (as in fullseek). */
 const MENU_CLOSE_DELAY = 150;
-/** Lets fonts and layout settle before correcting the initial #hash position. */
+/** Lets fonts and layout settle before correcting an initial #hash (as in fullseek). */
 const INITIAL_HASH_DELAY = 300;
 
 /**
- * Turns every same-page link into a smooth scroll: "#section" links scroll to
- * the section, and a link to the current page (the logo) scrolls to the top.
- * Links keep a real href, so they still work without JavaScript.
+ * Same-page links scroll with Lenis and leave the URL untouched: "#section"
+ * links go to the section, a link to the current page (the logo) goes to the
+ * top. Links keep a real href, so they still work without JavaScript.
  */
 export function SmoothAnchors() {
   useEffect(() => {
@@ -24,18 +24,11 @@ export function SmoothAnchors() {
       if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
 
       const id = decodeURIComponent(url.hash.slice(1));
-      const delay = link.closest('#menu-mobile') ? MENU_CLOSE_DELAY : 0;
+      if (id && !document.getElementById(id)) return;
 
-      if (id) {
-        if (!document.getElementById(id)) return;
-        e.preventDefault();
-        history.pushState(null, '', `#${id}`);
-        window.setTimeout(() => scrollToSection(id), delay);
-      } else {
-        e.preventDefault();
-        history.pushState(null, '', url.pathname);
-        window.setTimeout(() => scrollToY(0), delay);
-      }
+      e.preventDefault();
+      const delay = link.closest('#menu-mobile') ? MENU_CLOSE_DELAY : 0;
+      window.setTimeout(() => (id ? scrollToSection(id) : scrollToTop()), delay);
     };
 
     document.addEventListener('click', onClick);

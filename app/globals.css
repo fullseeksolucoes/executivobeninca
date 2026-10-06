@@ -65,12 +65,6 @@
     overflow-x: clip;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
-
   [id] {
     scroll-margin-top: 96px;
   }
