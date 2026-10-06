@@ -80,6 +80,11 @@
     outline-offset: 3px;
   }
 
+  /* Sections focused after an in-page jump: focus moves for screen readers, no ring. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
   ::selection {
     background: var(--color-gold);
     color: var(--color-ink);
