@@ -1,7 +1,6 @@
 import { Logo } from '@/components/ui/Logo';
 import type { Dictionary } from '@/lib/content/pt';
 import { localePath, type Locale } from '@/lib/i18n';
-import { Clock } from './Clock';
 import { LangSwitch } from './LangSwitch';
 import { MobileMenu } from './MobileMenu';
 
@@ -19,13 +18,6 @@ export function Header({ t, locale, whatsappHref }: Props) {
         <a href={localePath[locale]} aria-label={ui.homeLinkLabel} className="relative z-[60] flex shrink-0 items-center">
           <Logo tagline={ui.tagline} priority />
         </a>
-
-        <p className="label-mono hidden items-center gap-3 whitespace-nowrap 2xl:flex">
-          <span className="dot-live" aria-hidden="true" />
-          <span>
-            {ui.headerStatusCity} <Clock /> · {ui.headerStatusNote}
-          </span>
-        </p>
 
         <div className="flex items-center gap-4 xl:gap-5">
           <nav aria-label={ui.navLabel} className="hidden lg:block">
