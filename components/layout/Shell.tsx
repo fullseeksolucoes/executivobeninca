@@ -40,7 +40,7 @@ export function Shell({ locale, children }: { locale: Locale; children: React.Re
         <main id="conteudo" tabIndex={-1} className="outline-none">
           {children}
         </main>
-        <Footer t={t} />
+        <Footer t={t} locale={locale} />
         <MobileCtaBar whatsappHref={whatsappHref} ui={t.ui} />
         <AnalyticsListener />
         <LenisProvider />

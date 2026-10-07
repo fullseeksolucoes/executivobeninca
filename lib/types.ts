@@ -52,7 +52,6 @@ export interface ServiceCity {
 }
 
 export interface Vehicle {
-  ref: string;
   model: string;
   year: number;
   passengers: number;

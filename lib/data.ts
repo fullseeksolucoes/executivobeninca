@@ -12,7 +12,7 @@ import type {
 } from "./types";
 
 /** Bump when content changes. Used as `lastModified` in the sitemap. */
-export const CONTENT_UPDATED = "2026-10-06";
+export const CONTENT_UPDATED = "2026-10-07";
 
 export const site: SiteConfig = {
   name: "Beninca Transporte Executivo",
@@ -94,21 +94,18 @@ export const serviceArea: ServiceCity[] = [
 
 export const fleet: Vehicle[] = [
   {
-    ref: "REF. 01",
     model: "Toyota Corolla",
     year: 2025,
     passengers: 4,
     luggage: { value: "", confirmed: false },
   },
   {
-    ref: "REF. 02",
     model: "Honda Civic",
     year: 2022,
     passengers: 4,
     luggage: { value: "", confirmed: false },
   },
   {
-    ref: "REF. 03",
     model: "Honda WR-V",
     year: 2027,
     passengers: 4,
@@ -135,6 +132,9 @@ export const pendingClaims: Record<string, Confirmable<{ label: string }>> = {
     confirmed: false,
   },
 };
+
+/** Agency that built the site, credited in the footer. */
+export const developer = { name: "FullSeek", url: "https://www.fullseek.com.br/" };
 
 /** Only real testimonials, with authorization. The section stays hidden while empty. */
 export const testimonials: Testimonial[] = [];

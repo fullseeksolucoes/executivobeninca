@@ -8,7 +8,6 @@ export function Region({ t }: { t: Dictionary }) {
       <div className="wrap">
         <div className="grid gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">
-            <p className="label-mono mb-4">{copy.label}</p>
             <h2 id="regiao-titulo" className="display h2">
               {copy.headingStart} <span className="text-gold">{copy.headingHighlight}</span>
             </h2>

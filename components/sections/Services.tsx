@@ -9,16 +9,13 @@ export function Services({ t }: { t: Dictionary }) {
   return (
     <section id="servicos" aria-labelledby="servicos-titulo" className="border-t border-line py-20 md:py-28">
       <div className="wrap">
-        <SectionTitle id="servicos-titulo" label={copy.label} heading={copy.heading} />
-        <ol className="mt-12 border-t border-line">
-          {copy.items.map((item, i) => (
+        <SectionTitle id="servicos-titulo" heading={copy.heading} />
+        <ul className="mt-12 border-t border-line">
+          {copy.items.map((item) => (
             <li
               key={item.title}
-              className="grid gap-2 border-b border-line px-1 py-6 md:grid-cols-[80px_minmax(0,5fr)_minmax(0,6fr)_auto] md:items-center md:gap-6 md:px-4 md:py-8"
+              className="grid gap-2 border-b border-line px-1 py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)_auto] md:items-center md:gap-6 md:px-4 md:py-8"
             >
-              <span className="font-mono text-[13px] text-muted" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
               <h3 className="display text-[34px] md:text-[44px]">{item.title}</h3>
               <p className="text-text-2">{item.summary}</p>
               <WhatsAppLink
@@ -32,7 +29,7 @@ export function Services({ t }: { t: Dictionary }) {
               </WhatsAppLink>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
   );

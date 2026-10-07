@@ -7,7 +7,6 @@ export function QuoteSection({ t, location }: { t: Dictionary; location: Whatsap
   return (
     <section id="cotacao" aria-labelledby="cotacao-titulo" className="border-y border-line bg-ink-2 py-14 md:py-20">
       <div className="wrap">
-        <p className="label-mono mb-3">{copy.sectionLabel}</p>
         <h2 id="cotacao-titulo" className="display mb-8 text-[clamp(32px,3vw,44px)] md:mb-10">
           {copy.heading}
         </h2>

@@ -1,5 +1,5 @@
 /** The only place that knows the public URL of the site. */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.beninca.com.br').replace(/\/+$/, '');
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.executivobeninca.com.br').replace(/\/+$/, '');
 
 export function absoluteUrl(path = '/'): string {
   return new URL(path, `${SITE_URL}/`).toString();

@@ -6,7 +6,7 @@ export const pt = {
   meta: {
     title: 'Transfer Executivo em Joinville para Aeroportos | Beninca',
     description:
-      'Transfer executivo em Joinville e região para os aeroportos de Curitiba, Navegantes e Florianópolis. Motorista bilíngue, nota fiscal, 24h com agendamento.',
+      'Transfer executivo em Joinville e região para os aeroportos de Curitiba, Navegantes e Florianópolis. Mais de 20 anos de experiência, motorista bilíngue e 24h com agendamento.',
     ogAlt: 'Beninca Transporte Executivo: transfer de Joinville para os aeroportos JOI, NVT, CWB e FLN.',
     ogKicker: 'Transporte executivo · Joinville – SC',
     ogHeadline: 'Transfer para os aeroportos da região',
@@ -41,12 +41,12 @@ export const pt = {
   ],
 
   hero: {
-    labels: ['Portão de desembarque', 'Transporte executivo · Joinville – SC'],
+    label: 'Transporte executivo · Joinville – SC',
     titleBefore: 'Alguém vai estar',
     titleHighlight: 'esperando',
     titleAfter: 'por você.',
     lead:
-      'Transfer executivo em Joinville e região para os aeroportos de Curitiba, Navegantes, Florianópolis e Joinville. Sedans e SUV executivos, motorista bilíngue e nota fiscal para empresas.',
+      'Mais de 20 anos de transfer executivo em Joinville e região para os aeroportos de Curitiba, Navegantes, Florianópolis e Joinville. Sedans e SUV executivos, motorista bilíngue e nota fiscal para empresas.',
     badgeTitle: 'Carro com internet Starlink, sob solicitação.',
     badgeText: 'Reuniões, e-mails e chamadas de vídeo sem cair, do começo ao fim do trajeto.',
     languageBadgeTitle: 'Motorista bilíngue: português e inglês.',
@@ -54,7 +54,6 @@ export const pt = {
   },
 
   quoteForm: {
-    sectionLabel: 'Cotação em uma frase',
     heading: 'Peça sua cotação',
     textStart: 'Preciso de um motorista saindo de',
     textTo: 'até',
@@ -108,11 +107,10 @@ export const pt = {
   },
 
   board: {
-    label: 'Painel de saídas',
     heading: 'Saídas de Joinville',
     text: 'Cada viagem é cotada na hora pelo WhatsApp. Diga origem, destino e horário e receba o valor antes de confirmar.',
     caption: 'Aeroportos atendidos saindo de Joinville, com tempo aproximado de viagem. Valores sob consulta pelo WhatsApp.',
-    columns: { code: 'Código', destination: 'Destino', time: 'Tempo aprox.', price: 'Valor', action: 'Ação' },
+    columns: { code: 'Código', destination: 'Destino', time: 'Tempo aprox.', price: 'Valor', action: 'Cotação' },
     footnote: 'Tempos aproximados saindo de Joinville, sem trânsito. Podem variar com o horário e as condições da estrada.',
     from: 'Joinville',
     airportNames: {
@@ -124,7 +122,6 @@ export const pt = {
   },
 
   region: {
-    label: 'Região atendida',
     headingStart: 'Base em Joinville,',
     headingHighlight: 'todo o norte catarinense.',
     text:
@@ -136,7 +133,6 @@ export const pt = {
   },
 
   services: {
-    label: 'Serviços',
     heading: 'O que a gente faz',
     items: [
       {
@@ -174,24 +170,21 @@ export const pt = {
   },
 
   fleet: {
-    label: 'Frota',
-    heading: 'Ficha da frota',
+    heading: 'Nossa frota',
     terms: { passengers: 'Passag.', year: 'Ano', luggage: 'Malas' },
     extrasLabel: 'A bordo',
     photoPending: 'Foto real em breve',
     reserve: 'Reservar este carro',
     starlinkNote: 'Carro com internet Starlink disponível sob solicitação. Peça na cotação.',
     details: {
-      'REF. 01': { category: 'Sedan executivo', extras: ['Água', 'Balas', 'Carregador de celular'] },
-      'REF. 02': { category: 'Sedan executivo', extras: ['Água', 'Balas', 'Carregador de celular'] },
-      'REF. 03': { category: 'SUV', extras: ['Água', 'Balas', 'Carregador de celular', 'Mais espaço para bagagem'] },
+      'Toyota Corolla': { category: 'Sedan executivo', extras: ['Água', 'Balas', 'Carregador de celular'] },
+      'Honda Civic': { category: 'Sedan executivo', extras: ['Água', 'Balas', 'Carregador de celular'] },
+      'Honda WR-V': { category: 'SUV', extras: ['Água', 'Balas', 'Carregador de celular', 'Mais espaço para bagagem'] },
     } as Record<string, { category: string; extras: string[] }>,
   },
 
   protocol: {
-    label: 'Em toda viagem',
-    heading: 'Protocolo Beninca',
-    subheading: 'O que está garantido em toda viagem.',
+    heading: 'O que está garantido em toda viagem',
     clauses: [
       { title: 'Você sabe o valor antes.', text: 'A cotação chega pelo WhatsApp e o valor combinado é o valor pago.', confirmed: true },
       {
@@ -208,7 +201,6 @@ export const pt = {
   },
 
   corporate: {
-    label: 'Conta corporativa',
     heading: 'Sua empresa recebe visitas. A gente busca.',
     text:
       'Diretores, clientes e fornecedores chegando a Joinville e região pelos aeroportos de Curitiba, Navegantes e Florianópolis, com nota fiscal em toda viagem e pagamento por Pix ou cartão. Peça o carro com internet Starlink e as quase duas horas de estrada viram tempo de trabalho. Para visitantes estrangeiros, temos motorista bilíngue, que fala português e inglês.',
@@ -240,12 +232,15 @@ export const pt = {
   },
 
   faq: {
-    label: 'Dúvidas frequentes',
-    heading: 'Antes de perguntar',
+    heading: 'Dúvidas frequentes',
     items: [
       {
         q: 'Quanto custa a viagem?',
         a: 'Cada trajeto é cotado na hora. Mande origem, destino e horário pelo WhatsApp (47) 99946-7438 e receba o valor antes de confirmar.',
+      },
+      {
+        q: 'Há quanto tempo vocês trabalham com transporte executivo?',
+        a: 'Há mais de 20 anos, levando passageiros de Joinville e região aos aeroportos de Joinville, Navegantes, Curitiba e Florianópolis.',
       },
       {
         q: 'Vocês atendem fora de Joinville?',
@@ -277,16 +272,20 @@ export const pt = {
   },
 
   footer: {
-    columns: { contact: 'Contato', site: 'Nesta página', area: 'Atendimento', social: 'Redes' },
-    siteNavLabel: 'Seções da página',
+    columns: { contact: 'Contato', site: 'Navegação', area: 'Atendimento', social: 'Redes' },
+    siteNavLabel: 'Seções do site',
     googleBusiness: 'Perfil no Google',
     cnpjLabel: 'CNPJ',
     airportsLabel: 'Aeroportos: JOI · NVT · CWB · FLN',
+    developedBy: 'Desenvolvido por',
   },
 
   privacy: {
-    summary: 'Política de privacidade',
+    title: 'Política de privacidade',
+    metaTitle: 'Política de privacidade | Beninca Transporte Executivo',
+    metaDescription: 'Como a Beninca Transporte Executivo trata os dados que você informa pelo site, WhatsApp, telefone e e-mail.',
     updatedLabel: 'Atualizada em',
+    backHome: 'Voltar para o início',
     sections: [
       {
         heading: 'O que este site guarda',

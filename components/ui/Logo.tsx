@@ -11,6 +11,7 @@ export function Logo({ priority = false }: { priority?: boolean }) {
       width={width}
       height={height}
       priority={priority}
+      draggable={false}
       sizes="(min-width: 640px) 231px, 173px"
       className="h-9 w-auto sm:h-12"
     />

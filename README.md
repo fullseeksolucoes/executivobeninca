@@ -20,7 +20,7 @@ Copie `.env.example` para `.env.local`.
 
 | Variável | Para que serve |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | URL pública, sem barra no final. Provisória: `https://www.beninca.com.br`. Usada em canonical, Open Graph, sitemap, robots e JSON-LD. |
+| `NEXT_PUBLIC_SITE_URL` | URL pública, sem barra no final. Domínio: `https://www.executivobeninca.com.br`. Usada em canonical, Open Graph, sitemap, robots e JSON-LD. |
 | `NEXT_PUBLIC_GA_ID` | ID do Google Analytics 4 (`G-XXXX`). Sem valor, nenhum script de análise é carregado. Com valor, a política de privacidade passa a citar os cookies de análise. |
 | `NEXT_PUBLIC_GSC_VERIFICATION` | Código da meta tag de verificação do Google Search Console. |
 
@@ -38,7 +38,7 @@ O site é uma **única página**, em dois idiomas.
   - `CONTENT_UPDATED`: data do conteúdo (sitemap e política de privacidade)
 - Mensagens prontas do WhatsApp: chave `whatsapp` de cada dicionário; a montagem fica em `lib/whatsapp.ts`.
 - Ordem das seções: `components/LandingPage.tsx`.
-- A política de privacidade é um bloco expansível no rodapé (`#privacidade`).
+- A política de privacidade é uma página própria: `/politica-de-privacidade` e `/en/privacy-policy`, com link no rodapé.
 
 Outros pontos únicos:
 

@@ -11,21 +11,20 @@ export function Fleet({ t }: { t: Dictionary }) {
   return (
     <section id="frota" aria-labelledby="frota-titulo" className="border-t border-line py-20 md:py-28">
       <div className="wrap">
-        <SectionTitle id="frota-titulo" label={copy.label} heading={copy.heading} />
+        <SectionTitle id="frota-titulo" heading={copy.heading} />
 
         <ul className="mt-12 grid border-l border-t border-line md:grid-cols-3">
           {fleet.map((car) => {
-            const details = copy.details[car.ref];
+            const details = copy.details[car.model];
             return (
-              <li key={car.ref} className="flex flex-col border-b border-r border-line">
-                <p className="flex justify-between border-b border-line px-5 py-3 font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
-                  <span>{car.ref}</span>
-                  <span>{details.category}</span>
+              <li key={car.model} className="flex flex-col border-b border-r border-line">
+                <p className="border-b border-line px-5 py-3 font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
+                  {details.category}
                 </p>
 
                 <div className="relative flex aspect-[16/10] items-center justify-center bg-ink-2 px-6">
                   {car.image ? (
-                    <Image src={car.image.src} alt={car.image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+                    <Image src={car.image.src} alt={car.image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" draggable={false} className="object-cover" />
                   ) : (
                     <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted" aria-hidden="true">
                       {copy.photoPending}
@@ -78,8 +77,7 @@ export function Fleet({ t }: { t: Dictionary }) {
           })}
         </ul>
 
-        <p className="mt-6 flex items-center gap-3 text-text-2">
-          <span className="dot-live" aria-hidden="true" />
+        <p className="mt-6 text-text-2">
           {copy.starlinkNote}
         </p>
       </div>

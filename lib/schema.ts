@@ -1,5 +1,5 @@
 import { airports, serviceArea, site } from './data';
-import { localePath, type Locale } from './i18n';
+import { localePath, pagePath, type Locale } from './i18n';
 import { SITE_URL, absoluteUrl } from './site';
 import type { FaqEntry } from './types';
 
@@ -66,8 +66,8 @@ function websiteNode(): Node {
   };
 }
 
-function webPageNode(locale: Locale, title: string, description: string): Node {
-  const url = absoluteUrl(localePath[locale]);
+function webPageNode(locale: Locale, title: string, description: string, path = localePath[locale]): Node {
+  const url = absoluteUrl(path);
   return {
     '@type': 'WebPage',
     '@id': `${url}#webpage`,
@@ -103,5 +103,13 @@ export function landingGraph(locale: Locale, meta: { title: string; description:
       webPageNode(locale, meta.title, meta.description),
       faqNode(locale, faq),
     ],
+  };
+}
+
+/** The `@graph` of the privacy policy page. */
+export function privacyGraph(locale: Locale, meta: { title: string; description: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [websiteNode(), webPageNode(locale, meta.title, meta.description, pagePath.privacy[locale])],
   };
 }

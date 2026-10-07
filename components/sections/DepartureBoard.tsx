@@ -12,7 +12,7 @@ export function DepartureBoard({ t }: { t: Dictionary }) {
   return (
     <section id="rotas" aria-labelledby="rotas-titulo" className="py-20 md:py-28">
       <div className="wrap">
-        <SectionTitle id="rotas-titulo" label={copy.label} heading={copy.heading} text={copy.text} />
+        <SectionTitle id="rotas-titulo" heading={copy.heading} text={copy.text} />
 
         <InView
           armedClass="flap-armed"

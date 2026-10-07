@@ -3,19 +3,17 @@ import { FinalCta } from '@/components/sections/FinalCta';
 import { Icon } from '@/components/ui/Icon';
 import { trackAttrs } from '@/lib/analytics';
 import type { Dictionary } from '@/lib/content/pt';
-import { CONTENT_UPDATED, serviceArea, site } from '@/lib/data';
-import { GA_ID } from '@/lib/site';
+import { CONTENT_UPDATED, developer, serviceArea, site } from '@/lib/data';
+import { pagePath, sectionHref, type Locale } from '@/lib/i18n';
 
 const year = CONTENT_UPDATED.slice(0, 4);
-const updated = CONTENT_UPDATED.split('-').reverse().join('/');
 
 const colTitle = 'label-mono mb-5';
 const linkClass = 'inline-flex min-h-[44px] items-center text-text-2 underline-offset-4 hover:text-gold hover:underline';
 
-export function Footer({ t }: { t: Dictionary }) {
+export function Footer({ t, locale }: { t: Dictionary; locale: Locale }) {
   const { address } = site;
   const { footer, privacy } = t;
-  const privacySections = privacy.sections.filter((s) => !s.onlyWithAnalytics || GA_ID);
 
   return (
     <footer className="overflow-hidden border-t border-line">
@@ -29,6 +27,7 @@ export function Footer({ t }: { t: Dictionary }) {
             width={site.logo.full.width}
             height={site.logo.full.height}
             sizes="128px"
+            draggable={false}
             className="mb-8 h-32 w-32 border border-line"
           />
           <h2 className={colTitle}>{footer.columns.contact}</h2>
@@ -59,7 +58,7 @@ export function Footer({ t }: { t: Dictionary }) {
           <ul>
             {t.nav.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className={linkClass}>
+                <a href={sectionHref(locale, l.href)} className={linkClass}>
                   {l.label}
                 </a>
               </li>
@@ -106,38 +105,18 @@ export function Footer({ t }: { t: Dictionary }) {
       </div>
 
       <div className="border-t border-line">
-        <div className="wrap py-6">
-          <details id="privacidade" className="faq-item group">
-            <summary className="flex min-h-[44px] items-center gap-3 font-mono text-[12px] uppercase tracking-[0.1em] text-muted hover:text-gold">
-              <span className="faq-marker text-gold" aria-hidden="true">
-                ▸
-              </span>
-              {privacy.summary}
-            </summary>
-            <div className="max-w-3xl space-y-6 pb-4 pt-4">
-              <p className="label-mono">
-                {privacy.updatedLabel} {updated}
-              </p>
-              {privacySections.map((s) => (
-                <section key={s.heading}>
-                  <h3 className="font-semibold text-paper">{s.heading}</h3>
-                  {s.body.map((p) => (
-                    <p key={p.slice(0, 40)} className="mt-2 text-[15px] text-text-2">
-                      {p}
-                    </p>
-                  ))}
-                </section>
-              ))}
-              <p className="text-[15px] text-text-2">
-                {site.legalName} · {footer.cnpjLabel} {site.cnpj} ·{' '}
-                <a href={`mailto:${site.email}`} className="text-gold underline underline-offset-4 [overflow-wrap:anywhere]">
-                  {site.email}
-                </a>
-              </p>
-            </div>
-          </details>
-          <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
-            © {year} {site.name} · {footer.cnpjLabel} {site.cnpj}
+        <div className="wrap flex flex-col gap-2 py-6 font-mono text-[12px] uppercase tracking-[0.1em] text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} {site.name} · {footer.cnpjLabel} {site.cnpj} ·{' '}
+            <a href={pagePath.privacy[locale]} className="underline underline-offset-4 hover:text-gold">
+              {privacy.title}
+            </a>
+          </p>
+          <p>
+            {footer.developedBy}{' '}
+            <a href={developer.url} target="_blank" rel="noopener" className="underline underline-offset-4 hover:text-gold">
+              {developer.name}
+            </a>
           </p>
         </div>
       </div>

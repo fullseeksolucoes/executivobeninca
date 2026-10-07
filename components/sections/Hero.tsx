@@ -10,14 +10,7 @@ export function Hero({ t }: { t: Dictionary }) {
   return (
     <section aria-labelledby="hero-titulo" className="pb-14 pt-10 md:pb-20 md:pt-16">
       <div className="wrap">
-        <ul className="label-mono flex flex-wrap gap-x-6 gap-y-2">
-          {hero.labels.map((l, i) => (
-            <li key={l} className={i === 0 ? 'flex items-center gap-2 text-paper' : ''}>
-              {i === 0 && <span className="dot-live" aria-hidden="true" />}
-              {l}
-            </li>
-          ))}
-        </ul>
+        <p className="label-mono">{hero.label}</p>
 
         <div className="mt-6 grid gap-10 md:mt-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">

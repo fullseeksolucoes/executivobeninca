@@ -69,6 +69,12 @@
     scroll-margin-top: 96px;
   }
 
+  /* Images are not draggable (also set with draggable={false} for Firefox). */
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-gold);
     outline-offset: 3px;
@@ -240,14 +246,6 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
-  }
-
-  .dot-live {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--color-gold);
-    box-shadow: 0 0 0 3px rgb(214 178 94 / 0.18);
   }
 }
 
@@ -878,6 +876,7 @@
   -webkit-text-stroke: 1px var(--color-gold);
   white-space: nowrap;
   user-select: none;
+  pointer-events: none; /* decorative; its glyphs overlap the credit line above */
   margin-bottom: -0.2em;
 }
 

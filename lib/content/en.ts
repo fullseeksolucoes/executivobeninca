@@ -5,7 +5,7 @@ export const en: Dictionary = {
   meta: {
     title: 'Executive Airport Transfer in Joinville, Brazil | Beninca',
     description:
-      'Executive transfers from Joinville and nearby cities to Curitiba, Navegantes and Florianópolis airports. English-speaking driver, 24/7 by booking.',
+      'Executive transfers from Joinville and nearby cities to Curitiba, Navegantes and Florianópolis airports. Over 20 years of experience, an English-speaking driver, 24/7 by booking.',
     ogAlt: 'Beninca Executive Transport: transfers from Joinville to JOI, NVT, CWB and FLN airports.',
     ogKicker: 'Executive transport · Joinville – Brazil',
     ogHeadline: 'Airport transfers in the region',
@@ -40,12 +40,12 @@ export const en: Dictionary = {
   ],
 
   hero: {
-    labels: ['Arrivals gate', 'Executive transport · Joinville – Brazil'],
+    label: 'Executive transport · Joinville – Brazil',
     titleBefore: 'Someone will be',
     titleHighlight: 'waiting',
     titleAfter: 'for you.',
     lead:
-      'Executive transfers from Joinville and nearby cities to the Curitiba, Navegantes, Florianópolis and Joinville airports. Executive sedans and SUV, an English-speaking driver and invoices for companies.',
+      'Over 20 years of executive transfers from Joinville and nearby cities to the Curitiba, Navegantes, Florianópolis and Joinville airports. Executive sedans and SUV, an English-speaking driver and invoices for companies.',
     badgeTitle: 'Car with Starlink internet, on request.',
     badgeText: 'Meetings, emails and video calls that stay connected for the whole ride.',
     languageBadgeTitle: 'Bilingual driver: Portuguese and English.',
@@ -53,7 +53,6 @@ export const en: Dictionary = {
   },
 
   quoteForm: {
-    sectionLabel: 'Quote in one sentence',
     heading: 'Get your quote',
     textStart: 'I need a driver from',
     textTo: 'to',
@@ -107,11 +106,10 @@ export const en: Dictionary = {
   },
 
   board: {
-    label: 'Departures board',
     heading: 'Departures from Joinville',
     text: 'Every trip is quoted on WhatsApp. Tell us pick-up, destination and time, and get the price before you confirm.',
     caption: 'Airports served from Joinville, with approximate travel time. Prices on request via WhatsApp.',
-    columns: { code: 'Code', destination: 'Destination', time: 'Approx. time', price: 'Price', action: 'Action' },
+    columns: { code: 'Code', destination: 'Destination', time: 'Approx. time', price: 'Price', action: 'Quote' },
     footnote: 'Approximate times from Joinville, without traffic. They may vary with the time of day and road conditions.',
     from: 'Joinville',
     airportNames: {
@@ -123,7 +121,6 @@ export const en: Dictionary = {
   },
 
   region: {
-    label: 'Service area',
     headingStart: 'Based in Joinville,',
     headingHighlight: 'serving northern Santa Catarina.',
     text:
@@ -135,7 +132,6 @@ export const en: Dictionary = {
   },
 
   services: {
-    label: 'Services',
     heading: 'What we do',
     items: [
       {
@@ -173,24 +169,21 @@ export const en: Dictionary = {
   },
 
   fleet: {
-    label: 'Fleet',
-    heading: 'Fleet sheet',
+    heading: 'Our fleet',
     terms: { passengers: 'Pass.', year: 'Year', luggage: 'Bags' },
     extrasLabel: 'On board',
     photoPending: 'Real photo coming soon',
     reserve: 'Book this car',
     starlinkNote: 'Car with Starlink internet available on request. Ask for it in your quote.',
     details: {
-      'REF. 01': { category: 'Executive sedan', extras: ['Water', 'Candies', 'Phone charger'] },
-      'REF. 02': { category: 'Executive sedan', extras: ['Water', 'Candies', 'Phone charger'] },
-      'REF. 03': { category: 'SUV', extras: ['Water', 'Candies', 'Phone charger', 'More luggage space'] },
+      'Toyota Corolla': { category: 'Executive sedan', extras: ['Water', 'Candies', 'Phone charger'] },
+      'Honda Civic': { category: 'Executive sedan', extras: ['Water', 'Candies', 'Phone charger'] },
+      'Honda WR-V': { category: 'SUV', extras: ['Water', 'Candies', 'Phone charger', 'More luggage space'] },
     },
   },
 
   protocol: {
-    label: 'On every trip',
-    heading: 'The Beninca protocol',
-    subheading: 'What you can count on, every trip.',
+    heading: 'What you can count on, every trip',
     clauses: [
       { title: 'You know the price first.', text: 'The quote comes on WhatsApp, and the price agreed is the price paid.', confirmed: true },
       {
@@ -207,7 +200,6 @@ export const en: Dictionary = {
   },
 
   corporate: {
-    label: 'Corporate account',
     heading: 'Your company has visitors. We pick them up.',
     text:
       'Directors, clients and suppliers arriving in Joinville and nearby cities through the Curitiba, Navegantes and Florianópolis airports, with an invoice (nota fiscal) on every trip and payment by Pix or card. Ask for the car with Starlink internet and almost two hours on the road become working time. For international visitors, we have a bilingual driver who speaks Portuguese and English.',
@@ -239,12 +231,15 @@ export const en: Dictionary = {
   },
 
   faq: {
-    label: 'Frequently asked questions',
-    heading: 'Before you ask',
+    heading: 'Frequently asked questions',
     items: [
       {
         q: 'How much does a trip cost?',
         a: 'Every trip is quoted individually. Send pick-up, destination and time on WhatsApp +55 47 99946-7438 and get the price before you confirm.',
+      },
+      {
+        q: 'How long have you been in executive transport?',
+        a: 'For over 20 years, taking passengers from Joinville and nearby cities to the Joinville, Navegantes, Curitiba and Florianópolis airports.',
       },
       {
         q: 'Do you serve cities other than Joinville?',
@@ -276,16 +271,20 @@ export const en: Dictionary = {
   },
 
   footer: {
-    columns: { contact: 'Contact', site: 'On this page', area: 'Service area', social: 'Social' },
-    siteNavLabel: 'Page sections',
+    columns: { contact: 'Contact', site: 'Navigation', area: 'Service area', social: 'Social' },
+    siteNavLabel: 'Site sections',
     googleBusiness: 'Google profile',
     cnpjLabel: 'CNPJ',
     airportsLabel: 'Airports: JOI · NVT · CWB · FLN',
+    developedBy: 'Developed by',
   },
 
   privacy: {
-    summary: 'Privacy policy',
+    title: 'Privacy policy',
+    metaTitle: 'Privacy policy | Beninca Executive Transport',
+    metaDescription: 'How Beninca Executive Transport handles the information you share through the site, WhatsApp, phone and email.',
     updatedLabel: 'Updated on',
+    backHome: 'Back to the home page',
     sections: [
       {
         heading: 'What this site stores',

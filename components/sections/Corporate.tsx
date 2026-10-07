@@ -7,7 +7,6 @@ export function Corporate({ t }: { t: Dictionary }) {
     <section id="empresas" aria-labelledby="empresas-titulo" className="py-20 md:py-28">
       <div className="wrap grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
-          <p className="label-mono mb-4">{copy.label}</p>
           <h2 id="empresas-titulo" className="display h2">
             {copy.heading}
           </h2>

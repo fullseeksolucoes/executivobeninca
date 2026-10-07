@@ -27,7 +27,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
       <Protocol t={t} />
       <Corporate t={t} />
       <Testimonials t={t} />
-      <Faq label={t.faq.label} heading={t.faq.heading} items={t.faq.items} />
+      <Faq heading={t.faq.heading} items={t.faq.items} />
     </>
   );
 }

@@ -11,11 +11,12 @@ const MENU_ID = 'menu-mobile';
 
 interface Props {
   nav: Dictionary['nav'];
+  quoteHref: string;
   ui: Dictionary['ui'];
   whatsappHref: string;
 }
 
-export function MobileMenu({ nav, ui, whatsappHref }: Props) {
+export function MobileMenu({ nav, quoteHref, ui, whatsappHref }: Props) {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -78,7 +79,7 @@ export function MobileMenu({ nav, ui, whatsappHref }: Props) {
             ))}
           </ul>
           <div className="mt-8 grid gap-3">
-            <a href="#cotacao" onClick={close} className="btn btn-gold btn-lg">
+            <a href={quoteHref} onClick={close} className="btn btn-gold btn-lg">
               {ui.headerCta} <span className="arrow" aria-hidden="true">→</span>
             </a>
             <a

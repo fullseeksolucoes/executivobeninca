@@ -1,8 +1,8 @@
 # CLAUDE.md — Site Beninca Transporte Executivo
 
-**Landing page única** da **Beninca Transporte Executivo** (Joinville, SC), em português (`/`) e inglês (`/en`). Transfer executivo de Joinville e região para os aeroportos de Joinville (JOI), Navegantes (NVT), Curitiba (CWB) e Florianópolis (FLN). Toda conversão vai para o WhatsApp.
+**Landing page** da **Beninca Transporte Executivo** (Joinville, SC), em português (`/`) e inglês (`/en`). Transfer executivo de Joinville e região para os aeroportos de Joinville (JOI), Navegantes (NVT), Curitiba (CWB) e Florianópolis (FLN). Toda conversão vai para o WhatsApp.
 
-**Não criar outras páginas.** Conteúdo novo entra como seção da landing, nos dois idiomas.
+**Não criar outras páginas.** A única exceção é a política de privacidade (`/politica-de-privacidade` e `/en/privacy-policy`). Conteúdo novo entra como seção da landing, nos dois idiomas.
 
 ## Comandos
 
@@ -20,6 +20,7 @@
 - Animações em CSS. **Não adicionar** framer-motion, three.js nem bibliotecas de ícones. O site não tem animação de carro. Exceção: **Lenis** (rolagem suave, igual ao projeto fullseek).
 - Rolagem e navegação na página (igual ao fullseek): `components/layout/LenisProvider.tsx` liga o Lenis (`lerp: 0.15` na roda do mouse, `smoothWheel`, `touchMultiplier: 2`, `respectReducedMotion: false` a pedido do cliente, como no fullseek). Cliques em links usam curva ease-in-out com duração proporcional à distância (0,8s a 1,4s), para o percurso ficar visível nesta página longa. `components/layout/SmoothAnchors.tsx` intercepta links `#secao` e o link da logo e chama `scrollToSection()`/`scrollToTop()` de `lib/scroll.ts`, **sem colocar `#secao` na URL**. O menu do celular fecha e a rolagem começa 150ms depois; o Lenis fica parado com o menu aberto. A folga do cabeçalho vem do `scroll-margin-top` das seções. Elementos com rolagem própria levam `data-lenis-prevent`. Links novos só precisam de `href="#id"`.
 - Server Components por padrão; `'use client'` só quando houver estado ou eventos.
+- Imagens não são arrastáveis: toda `<Image>` leva `draggable={false}` (a regra `img` em `app/globals.css` cobre Chrome e Safari; o atributo cobre o Firefox).
 
 ## Onde fica cada coisa
 
@@ -32,14 +33,17 @@
 - Eventos de analytics: `track()` em `lib/analytics.ts`.
 - Seções: `components/LandingPage.tsx` monta a página; cada seção em `components/sections/`.
 - **Campos de formulário:** sempre os componentes de `components/ui/form/` — `TextField`, `Select`, `DatePicker` e `Checkbox` — nunca `<select>`, `<input type="date|time|checkbox">` nativos. Variantes: `line` (dentro da frase de cotação, com `hideLabel`) e `box` (formulários comuns). `Select` e `DatePicker` seguem os padrões WAI-ARIA (combobox/listbox e date picker) e mandam o valor por `<input type="hidden">`, então `FormData` funciona normalmente. O horário é um `Select` de 30 em 30 minutos. Estilos em `app/globals.css` (bloco "Field kit", classes `fx-*`).
-- Política de privacidade: bloco `<details id="privacidade">` no rodapé.
+- Política de privacidade: página própria (`components/PrivacyPage.tsx`, rotas em `app/(pt)/politica-de-privacidade/` e `app/(en)/en/privacy-policy/`), com link na última linha do rodapé. URLs das páginas em `pagePath` (`lib/i18n.ts`); o botão de idioma leva à mesma página no outro idioma. Links do menu e do rodapé usam `sectionHref()` para funcionar também fora da landing.
+- Crédito "Desenvolvido por FullSeek" no rodapé, ao lado do ©: link em `developer` (`lib/data.ts`), texto em `footer.developedBy`.
 - Pendências do cliente: `PENDENCIAS.md`.
 - Logo do cliente (`public/brand/`, configurada em `site.logo`): `beninca-logo.webp/.jpg` é a original (640×640, fundo preto), usada no rodapé, no schema e na imagem OG; `beninca-wordmark.png` é o recorte "BENINCA / TRANSPORTE EXECUTIVO" com fundo transparente, usado no cabeçalho. Ícones: `app/icon.png` e `app/apple-icon.png` (recorte do "B") e `public/brand/icon-192.png`/`icon-512.png` (logo inteira, para o manifest). Não redesenhar a logo.
 
 ## Dados confirmados do cliente
 
 - WhatsApp e telefone: (47) 99946-7438 · `+5547999467438`
-- E-mail: adenilsonbeninca@yahoo.com.br · Instagram: @tr.executivo_beninca
+- E-mail: adenilsonbeninca@yahoo.com.br · Instagram: @tr.executivobeninca
+- Domínio: www.executivobeninca.com.br (`NEXT_PUBLIC_SITE_URL=https://www.executivobeninca.com.br`)
+- Mais de 20 anos no transporte executivo (o ano de início ainda não foi informado; sem ele, nada de `foundingDate` no schema).
 - CNPJ 00.557.705/0001-04 · Rua XV de Novembro, 7276 – Vila Nova – Joinville – SC
 - Cidades atendidas: Joinville (base), Araquari, Garuva, Guaramirim, Itapoá, Jaraguá do Sul e São Francisco do Sul. Aeroportos: JOI, NVT, CWB, FLN. Outros destinos sob consulta.
 - Frota: Corolla 2025, Civic 2022, WR-V 2027. Até 4 passageiros por carro.
@@ -61,10 +65,11 @@
 - Títulos em caixa alta condensada; rótulos em mono espaçado; divisórias de 1px; cantos com raio de no máximo 2px; sem sombras pesadas.
 - **Evitar a identidade do concorrente:** Playfair Display, Inter, azul/vermelho como cores de marca, foto de sedan em rua molhada com linhas de luz.
 - Nada de grade de cards com ícone, gradientes coloridos ou emoji.
+- Nada com cara de template de IA: códigos de referência ("REF. 01"), numeração decorativa (01, 02… ou §), pontos pulsantes de "ao vivo" e nomes inventados para listas ("Protocolo X"), etiqueta pequena acima do título repetindo o próprio título e títulos "espertos" ("Antes de perguntar").
 
 ## SEO e qualidade (sempre)
 
 - Um H1 por página. Metadata completa (canonical, `hreflang` pt-BR/en/x-default, Open Graph com `siteName`, `locale`, `type`, `url` e imagem).
-- Sitemap com as duas URLs e alternâncias de idioma. Nunca bloquear `/_next/` no robots. Sem `new Date()` no sitemap.
+- Sitemap com as URLs das páginas nos dois idiomas e alternâncias de idioma. Nunca bloquear `/_next/` no robots. Sem `new Date()` no sitemap.
 - Acessibilidade WCAG AA: labels reais, foco visível, `aria-label` em botões só com ícone, `prefers-reduced-motion` respeitado nas animações CSS (exceção pedida pelo cliente: a rolagem do Lenis).
 - Metas: Lighthouse mobile Performance ≥ 95, SEO 100, Acessibilidade ≥ 95. Sem rolagem horizontal em 360px.
